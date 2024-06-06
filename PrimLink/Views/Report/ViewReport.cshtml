@@ -1,0 +1,2321 @@
+﻿@{ Layout = null; }
+<html>
+<head>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .sidenav {
+            font-family: "Roboto","Helvetica","Arial","sans-serif";
+            height: 100%;
+            width: 13%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+            .sidenav a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                color: #818181;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+        .main {
+            margin-left: 13%; /* Same as the width of the sidenav */
+            font-size: 28px; /* Increased text to enable scrolling */
+            padding: 10px 10px;
+            height: 150vh;
+            position: relative;
+            top: 41px;
+        }
+
+        .card {
+            /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+        /* Add some padding inside the card container */
+
+
+        .container {
+            padding: 2px 16px;
+            margin: 0 auto; /* Center the DIV horizontally */
+        }
+
+        body {
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 40px;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .fixed-header {
+            color: #fff;
+            background: #111;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-left: 13%;
+        }
+
+
+        table {
+            border-left: 1px solid #bebebe;
+            border-top: 1px solid #bebebe;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #bebebe;
+            border-right: 1px solid #bebebe;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: normal;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea,
+        select {
+            border: none;
+            border: 2px dashed #bebebe;
+            border-radius: 0px;
+            color: inherit;
+            padding: 4px 3px;
+            text-align: left;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea {
+            background-color: inherit;
+            display: block;
+            font-size: inherit;
+        }
+
+        .upload-photo,
+        .upload-photo-paste,
+        .upload-take-picture,
+        .import-measurements {
+            border: 2px dashed #bebebe;
+            float: left;
+            height: 50px;
+            padding: 30px;
+            text-align: center;
+            vertical-align: middle;
+            width: auto;
+        }
+
+        a {
+            font-size: 15px
+        }
+
+        .help {
+            background-color: #677595;
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .right {
+            text-align: right;
+        }
+    </style>
+    <script src="~/js/jquery.min.js"></script>
+    @*   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> *@
+    <script src="~/js/FillReport.js"></script>
+</head>
+<body>
+    <form action="/Report/SaveReport" method="post" enctype="multipart/form-data" id="FrmSubmit">
+        <input type="submit" value="Submit" style="position: relative;left: 238px;top: 30px;">
+        <div class="fixed-header">
+            <div class="container">
+                <h2></h2>
+            </div>
+        </div>
+        <div class="sidenav" style="display:none;">
+            <br />
+            <a href="#generalInfo">General Information</a>
+            <br />
+            <a href="#summaryForResult">Summary For Inspection Result</a>
+            <br />
+            <a href="#keyRemarks">Key Remarks</a>
+            <br />
+            <a href="#keyRemarksDetail">Key Remarks Detail</a>
+            <br />
+            <a href="#workmanship">Workmanship</a>
+            <br />
+            <a href="#productionQuantityStatus">Production Quantity Status</a>
+            <br />
+            <a href="#specificationsLabelingPackaging">Specifications, Labeling & Packaging</a>
+            <br />
+            <a href="#referenceWisePhotos">Reference Wise Photos</a>
+            <br />
+            <a href="#measurementData">Measurement Data</a>
+            <br />
+            <a href="#onSiteTest">On-Site Tests</a>
+            <br />
+            <a href="#additionalUsefulInformationAndPhotos">Additional Useful Information And Photos</a>
+        </div>
+        <div class="main">
+            <div>
+
+
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3>Sampling informationGeneral information</h3>
+
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <th width="100">Report #</th>
+                                            <td width="210">23056211-015</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Service date</th>
+                                            <td width="210">
+                                                2024/01/30
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Client name</th>
+                                            <td width="210">Ozeol</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Inspection type</th>
+                                            <td width="210">
+                                                PSI
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Your reference</th>
+                                            <td width="210" class="simple_font">
+                                                6500007050 - 0006002392
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">PO number</th>
+                                            <td width="210" class="simple_font">
+
+                                                <span class="products-purchaseOrderNumber">6500007050 - 0006002392</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Vendor name</th>
+                                            <td width="210">
+                                                ALEENA INDUSTRIES
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Product name</th>
+                                            <td width="210" class="simple_font">
+
+                                                <span class="products-name">
+                                                    DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN, DYED FITTED
+                                                    SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN , DYED FITTED SHEET 100% COTTON 78
+                                                    FILS 160x200CM ASSORTED COLORS WOVEN , DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS
+                                                    WOVEN , DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Total ordered quantity</th>
+                                            <td width="210">
+                                                <span class="products-quantity">13020</span>
+                                                pieces
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Inspected sample size</th>
+                                            <td width="210">
+                                                315 pieces
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Nbr Family / Nbr Ref</th>
+                                            <td width="210">
+                                                /5
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Approval sample(s) available</th>
+                                            <td width="210"> No </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Destination Country</th>
+                                            <td width="210">
+                                                France
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <h3> YOUR PRODUCT :</h3>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                <input type="file" class="fileInput fileInputYourProduct" multiple />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                    </tbody>
+                </table>
+
+                <h3>  IMPORTANT REMARKS </h3>
+
+                <table cellpadding="0" cellspacing="0" id="table-remarks">
+                    <tr>
+                        <th width="20" class="center">1</th>
+                        <td width="668">
+                            Workmanship check is not conformed (beyond AQL).<br>
+                            Critical defects: 0<br>
+                            Major defects: 15<br>
+                            Minor defects: 0<br>
+                            Reminder of maximum allowed defects based on the AQL: Critical: 0, Major: 14, Minor: 21<br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+                <table id="tblDoc" class="doc-Table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr class="tr_1">
+                            <td width="20" rowspan="2">
+                                <button type="button" class="btnRemove">
+                                    Remove
+                                </button>
+                            </td>
+                            <td>
+                                <p>
+                                    <select class="ddlForAddARemark">
+                                        <option value="-"></option>
+                                        <option value="FAIL">FAIL</option>
+                                        <option value="PENDING">PENDING</option>
+                                        <option value="NOTE">NOTE</option>
+                                    </select>
+                                </p>
+                            </td>
+                            <td width="690">
+                                <textarea class="textareaForAddARemark"></textarea>
+                            </td>
+                        </tr>
+                        <tr class="tr_2">
+                            <td colspan="5">
+                                <input type="file" class="fileInput FileUploadForAddARemark" />
+                                <input type="hidden" class="hiddenField" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <a href="javascript:void(0);" class="hrefAddARemark">
+                        Add a remark
+                    </a>
+                </p>
+
+
+
+                <h3>
+                    Customer special checkpoints
+                </h3>
+
+                <div class="divCustomerSpecialCheckpoints">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="600">Client's special specification and requirements</th>
+                                <th width="110">Result</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="20" class="center">
+                                    A
+                                </th>
+                                <th width="555">
+                                    <ul>
+                                        <li>
+                                            <strong>Seal 5pcs production samples at factory, and factory will send them to the client office.</strong><br>
+                                            &nbsp;
+                                        </li>
+                                        <li><strong>For all household linen products, we will have to leave sealed production samples in the supplier's warehouse. We should indicate this info when placing the booking. We should seal one pc of each item. Before we seal the samples, please check the dimensions, workmanship &amp; thread count of the samples. A separate remark needs to be added to show the result of the checkpoints of the samples. Updated by Doris Tang on 11/16/2023</strong></li>
+                                    </ul>
+
+                                </th>
+                                <td width="110" class="result result_">
+                                    <select class="ddlforCustomerCheckPointA ddl1" onchange="GetOverallResultForCheckpoints();">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <textarea class="textA save-fill automatic-id remark loaded" rows="5" cols="190"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730">
+                                    <input type="file" class="fileInputA CustomerSpChkFileUload" multiple />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="20" class="center">
+                                    B
+                                </th>
+                                <th width="555">
+                                    <ul>
+                                        <li>
+                                            <strong>Please send all the original photos to the client by WeTransfer, with a separate folder/zip of pictures for each reference.</strong><br>
+                                            &nbsp;
+                                        </li>
+
+                                    </ul>
+
+                                </th>
+                                <td width="110" class="result result_">
+                                    <select class="ddlforCustomerCheckPointB ddl1" onchange="GetOverallResultForCheckpoints();">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <textarea class="textB save-fill automatic-id remark loaded" rows="5" cols="190"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730">
+                                    <input type="file" class="fileInputB CustomerSpChkFileUload" multiple />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="600" class="right"><strong>Overall Result</strong></th>
+                                <td width="110" class="result result_notconformed">
+                                    <span class="CustomerSpecialCheckPointOverAllResult">
+                                        Conformed
+                                    </span>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+                <div class="divWORKMANSHIP">
+                    <h3>A - WORKMANSHIP</h3>
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label>
+                            <input id="protocol_element-12223433-279683-inspected" class="protocol_update co_writer"
+                                   type="radio"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+
+                    <hr>
+
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">6</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">2</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">3</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">4</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">1</span>
+                    </h4>
+                    <hr />
+
+
+                    <table cellpadding="0" cellspacing="0" class="help">
+                        <tbody>
+                            <tr>
+                                <td width="732">
+                                    <table class="Table" style="width:614.25pt; border-top:none; border-left:solid #333333 1.0pt; border-bottom:solid #333333 1.0pt; border-right:none; border:solid #333333 1.0pt" width="819">
+                                        <tbody>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">23056211-015</span></span></strong></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Inspection Scope</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">&nbsp;</p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">RECOMMENDED</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Sampling</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Batch sampling</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Checkpoints</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">6500007050 - 0006002392</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td rowspan="8" style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Workmanship check / Visual Check.</span></span></span></p>
+                                                </td>
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">SKU#</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Name</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Quantity</span></span></span></p>
+                                                </td>
+                                                <td style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Sample Size</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">1</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2500</span></span></span></p>
+                                                </td>
+                                                <td rowspan="5" style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">315</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3000</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 160x200CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3450</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">4</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2070</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">6</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2000</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td colspan="2" style="width:373.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="498">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">TOTAL</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">13,020</span></span></span></p>
+                                                </td>
+                                                <td style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">315</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:33.0pt">
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:33.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">ISO 2859-1 Single sampling, General inspection, Inspection Level (II) per total quantity/ AQL: Critical (0); Major (2.5); Minor (4)</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Quantity check (Total order)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Yes</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:23.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:23.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Packaging/Packing/Specs (at least 1 unit/ref)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:23.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Yes</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:49.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:49.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Measurements</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">
+                                                        <span style="height:49.5pt">
+                                                            <span lang="EN-US" style="font-size:11.5pt">
+                                                                <span helvetica="" neue="" style="font-family:">
+                                                                    For the product: 5pcs per style<br>
+                                                                    For the carton: 1 carton for each style
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:82.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:82.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">On site tests </span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">
+                                                        <span style="height:82.5pt">
+                                                            <span lang="EN-US" style="font-size:11.5pt">
+                                                                <span helvetica="" neue="" style="font-family:">
+                                                                    Just the 6 tests listed below:<br>
+                                                                    - Adhesive test on the logo/printing<br>
+                                                                    - Color fastness check<br>
+                                                                    - Color shade check<br>
+                                                                    - GSM check, 3pcs per color<br>
+                                                                    - Thread count on 5pcs per style, 30pcs in total<br>
+                                                                    - Burn test (1 pc each style)
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:28.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:28.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Other checkpoints or comments.</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">&nbsp;</p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Total Report(s)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">1</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Workload (Man Day)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <h2>
+                        SAMPLING INFORMATION
+                    </h2>
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    <p>Sampled cartons quantity is at least square root (√) of total cartons quantity of this lot.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table cellpadding="0" cellspacing="0" id="tblSampleInformation" class="tblSampleInformation">
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" width="120">PO #</th>
+                                <th rowspan="2" width="130">Model #</th>
+                                <th rowspan="2" width="105">Sample Size from packed CTNS</th>
+                                <th rowspan="2" width="105">Sample Size from finished un-packed</th>
+                                <th colspan="2" width="170">Inspected Carton</th>
+                            </tr>
+                            <tr>
+                                <th>CTN</th>
+                                <th>CTN #</th>
+                            </tr>
+                            <tr class="SampleData">
+                                <td width="120">
+                                    <span class="PONumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="130">
+                                    <span class="ModelNumber">6</span>
+                                </td>
+                                <td width="105">
+                                    <input class="PackedCTNS save-fill automatic-id loaded " type="text" onchange="CalculatePackedCTNS();">
+                                </td>
+                                <td width="105">
+                                    <input class="FinshedUnpacked save-fill automatic-id loaded " onchange="CalculateFinishedUnPacked();">
+                                </td>
+                                <td width="40">
+                                    <input class="InspectedCartonCTN save-fill automatic-id loaded" type="text" onchange="CalculateInspectedCartonCTN();">
+                                </td>
+                                <td width="120">
+                                    <input class="InspectedCartonCTNNumber save-fill automatic-id loaded" type="text">
+                                </td>
+                            </tr>
+
+                            <tr class="SampleData">
+                                <td width="120" class="simple_font">
+                                    <span class="PONumber product-255961-purchaseOrderNumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="130" class="simple_font">
+                                    <span class="ModelNUmber product-255961-modelNumber">1</span>
+                                </td>
+                                <td width="105">
+                                    <input class="PackedCTNS save-fill automatic-id loaded" type="text" onchange="CalculatePackedCTNS();">
+                                </td>
+                                <td width="105">
+                                    <input class="FinshedUnpacked save-fill automatic-id loaded" type="text" onchange="CalculateFinishedUnPacked();">
+                                </td>
+                                <td width="40">
+                                    <input class="InspectedCartonCTN save-fill automatic-id loaded" type="text" onchange="CalculateInspectedCartonCTN();">
+                                </td>
+                                <td width="120">
+                                    <input class="InspectedCartonCTNNumber save-fill automatic-id loaded" type="text">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="2" width="160" class="right"><strong>Total</strong></th>
+                                <td width="105">
+                                    <input class="save-fill automatic-id loaded TotalSampleSizeFromPackedCTNS" type="text" disabled="disabled">
+                                </td>
+                                <td width="105">
+                                    <input class="save-fill automatic-id loaded TotalSampleSizeFinishedUnPacked" type="text" disabled="disabled">
+                                </td>
+                                <td width="40">
+                                    <input class="save-fill automatic-id loaded TotalInspectedCartonCTN" type="text" disabled="disabled" id="12910035-cartons-total">
+                                </td>
+                                <td width="120">
+                                    As above
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    The factory allows drawing samples from finished non-packed products.
+                                    <select class="AllowDrawingSamplesNonPacked save-fill automatic-id loaded">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    100% of the quantity is fully available for sampling.
+                                    <select class="HundredPercentQtyForSampling save-fill automatic-id loaded">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Inspection standard</h2>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    ISO 2859-1 (ANSI/ASQ Z1.4)<br>
+                                    Single sampling, General inspection, Inspection Level II<br>
+
+                                    AQL:
+                                    Critical (0);
+                                    Major (2.5);
+                                    Minor (4)<br>
+                                    *This standard is a statistical tool to first determine how many samples should be inspected, and then define the acceptance quality limits for non-conform products. Based on that we can determine if your products quality is acceptable or not.<br>
+                                    Please note that the inspection result is based on the AQL table <u>AND</u> the other report sections: quantity check, product specifications, labeling, marking, packing, packaging, and on-site tests.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>RESULTS</h2>
+
+                    <table cellpadding="0" cellspacing="0" id="tbInspectionStandard">
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" width="110">&nbsp;</th>
+                                <th rowspan="2" width="110">PO # / Model #</th>
+                                <th rowspan="2" width="45">Picture #</th>
+                                <th rowspan="2" width="45">Defect Photo</th>
+                                <th rowspan="2" width="200">Defect description</th>
+                                <th colspan="3" width="135">Defect classification</th>
+                            </tr>
+                            <tr>
+                                <th width="45">Critical</th>
+                                <th width="45">Major</th>
+                                <th width="45">Minor</th>
+                            </tr>
+                        </tbody>
+                        <tbody>
+
+
+                            <tr class="tr_1">
+                                <td width="110">
+                                    <button type="button" class="">
+                                        Remove
+                                    </button>
+                                </td>
+                                <td width="110">
+                                    <select class="ddlPOORModelNo">
+                                        <option value="">--</option>
+                                        <option value="255962">6500007050 - 0006002392 / 6</option>
+                                        <option value="255959">6500007050 - 0006002392 / 2</option>
+                                        <option value="255960">6500007050 - 0006002392 / 3</option>
+                                        <option value="255961">6500007050 - 0006002392 / 4</option>
+                                        <option value="255958">6500007050 - 0006002392 / 1</option>
+                                    </select>
+                                </td>
+                                <td width="110" class="">
+                                    <input class="tdPictureNo" value="A1" type="text">
+                                </td>
+                                <td width="110">
+                                    <input type="file" class="fileInput fileInputInspectionStandardDefectPhoto" multiple />
+                                </td>
+                                <td width="110">
+                                    <select class="ddlDefectDesc">
+                                        <option value="">--</option>
+                                        <option value="255962">Custom defects</option>
+                                        <option value="255959">Accessories</option>
+                                        <option value="255960">Foreign bodies</option>
+                                        <option value="255961">Material issue</option>
+                                        <option value="255958">Yarn & Thread</option>
+                                    </select>
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtCritical" type="number">
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtMajor" type="number">
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtMinor" type="number">
+                                </td>
+                            </tr>
+
+                            <tr class="tr_1">
+                                <td width="110">
+                                    <button type="button" class="">
+                                        Remove
+                                    </button>
+                                </td>
+                                <td width="110">
+                                    <select class="ddlPOORModelNo">
+                                        <option value="">--</option>
+                                        <option value="255962">6500007050 - 0006002392 / 6</option>
+                                        <option value="255959">6500007050 - 0006002392 / 2</option>
+                                        <option value="255960">6500007050 - 0006002392 / 3</option>
+                                        <option value="255961">6500007050 - 0006002392 / 4</option>
+                                        <option value="255958">6500007050 - 0006002392 / 1</option>
+                                    </select>
+                                </td>
+                                <td width="110" class="">
+                                    <input class="tdPictureNo" value="A2" type="text">
+                                </td>
+                                <td width="110">
+                                    <input type="file" class="fileInput fileInputInspectionStandardDefectPhoto" multiple />
+                                </td>
+                                <td width="110">
+                                    <select class="ddlDefectDesc">
+                                        <option value="">--</option>
+                                        <option value="255962">Custom defects</option>
+                                        <option value="255959">Accessories</option>
+                                        <option value="255960">Foreign bodies</option>
+                                        <option value="255961">Material issue</option>
+                                        <option value="255958">Yarn & Thread</option>
+                                    </select>
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtCritical" type="number">
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtMajor" type="number">
+                                </td>
+                                <td width="45">
+                                    <input class="save-fill automatic-id critical txtMinor" type="number">
+                                </td>
+                            </tr>
+                            <tr class="trSampleSize">
+                                <th colspan="5" class="right">
+                                    <strong>Sample size</strong>
+                                </th>
+                                <td>
+                                    <input class="SampleSizeCritical" type="text" value="315">
+                                </td>
+                                <td class="">
+                                    <input class="SampleSizeMajor" type="text" value="315">
+
+                                </td>
+                                <td class="">
+                                    <input class="SampleSizeMinor" type="text" value="315">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="5" class="right">
+                                    <strong>Total found defects</strong>
+                                </th>
+                                <td class="result result_conformed">
+                                    <input class="TotalfounddefectsCritical" type="text">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="TotalfounddefectsMajor" type="text">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="TotalfounddefectsMinor" type="text">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="5" class="right"><strong>AQL allowed defects</strong></th>
+                                <td class="result result_conformed">
+                                    <input class="AQLAllowedDefectsCritical" type="text" value="1">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="AQLAllowedDefectsMajor" type="text" value="24">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="AQLAllowedDefectsMinor" type="text" value="31">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" class="right"><strong>AQL Results</strong></th>
+                                <td class="result result_conformed">
+                                    <select class="save-fill automatic-id ddlAQLResults">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+
+                                    </select>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <p>
+                                        General defects found (Not included in the AQL result above)
+                                        <select class="ddlGeneralDefectsFound">
+                                            <option value="">--</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </p>
+                                    <p class="note">
+                                        Note: A defect becomes a General Defect when it appears on at least 20% of the inspected samples. To reflect an exact overview and description of the findings, the General Defect is excluded from the defect list of the above table.
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                    <p>
+                                        General defect(s) description:
+                                    </p>
+                                    <textarea rows="7" cols="180" class="txtGeneralDefectDesc"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <p>
+                                        Non-conformity found
+                                        <select class="ddlNonConformityFound">
+                                            <option value="">--</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                    <p>
+                                        Non-conformity Remarks:
+                                    </p>
+                                    <textarea rows="7" cols="180"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="7" class="right"><strong>Overall Result</strong></th>
+                                <td colspan="1" class="result result_notconformed">
+                                    <input class="save-fill automatic-id loaded txtOverallResult" type="text" value="Not conformed">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <a href="javascript:void(0);" class="hrefAddADefect">
+                            Add A Defect
+                        </a>
+                    </p>
+
+
+                    @*
+                        <h2>RESULTS</h2>
+
+                        <table cellpadding="0" cellspacing="0" id="table-workmanship-12910059">
+                        <tbody>
+                        <tr>
+                        <th rowspan="2" width="110">&nbsp;</th>
+                        <th rowspan="2" width="110">PO # / Model #</th>
+                        <th rowspan="2" width="45">Picture #</th>
+                        <th rowspan="2" width="200">Defect description</th>
+                        <th colspan="3" width="135">Defect classification</th>
+                        </tr>
+                        <tr>
+                        <th width="45">Critical</th>
+                        <th width="45">Major</th>
+                        <th width="45">Minor</th>
+                        </tr>
+
+
+
+                        </tbody>
+                        <tbody class="dynamic-lines" data-default_index="1" id="dynamic-lines-12910047" data-callback="criterias_update_12910059();check_aql_12910059();" data-alias="12910059-dynamic-lines" data-model="dynamic-line-12910047">
+
+                        <tr id="">
+                        <td width="110">
+                        <button type="button" class="" id="">
+                        Remove
+                        </button>
+
+                        </td>
+                        <td width="110">
+                        <select class="InspectionPONumber save-fill automatic-id select-nice" required="required">
+                        <option value="">--</option>
+                        <option value="255962">6500007050 - 0006002392 / 6</option>
+                        <option value="255959">6500007050 - 0006002392 / 2</option>
+                        <option value="255960">6500007050 - 0006002392 / 3</option>
+                        <option value="255961">6500007050 - 0006002392 / 4</option>
+                        <option value="255958">6500007050 - 0006002392 / 1</option>
+                        </select>
+                        </td>
+                        <td width="45">
+                        A<span class="index">123334</span>
+                        </td>
+                        <td width="190" class="text_notconformed">
+                        <p>
+                        <select class="InspectionDefectDescriptionStatus save-fill automatic-id select-nice" required="required">
+                        <option value="">--</option>
+                        <optgroup label="Custom defects">
+                        <option data-description="true" value="5088"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Accessories
+                        </option>
+                        <option data-description="true" value="4615"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Accessories &amp; Components
+                        </option>
+                        <option data-description="true" value="4656"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Appearance
+                        </option>
+                        <option data-description="true" value="4668"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Assembly
+                        </option>
+                        <option data-description="true" value="4676"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Cleanliness
+                        </option>
+                        <option data-description="true" value="5419"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Design Issue
+                        </option>
+                        <option data-description="true" value="4691"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Deterioration
+                        </option>
+                        <option data-description="true" value="4896"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Embroidery
+                        </option>
+                        <option data-description="true" value="4701"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Foreign bodies
+                        </option>
+                        <option data-description="true" value="4714"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Function
+                        </option>
+                        <option data-description="true" value="5424"
+                        data-critical="1" data-major="1" data-minor="1">
+                        Functions
+                        </option>
+                        <option data-description="true" value="4719"
+                        data-critical="1" data-major="1" data-minor="1">
+                        </option>
+                        <option data-description="false" value="4869"
+                        data-critical="1">
+                        Missing compulsory Label
+                        </option>
+                        <option data-description="false" value="4870"
+                        data-critical="1">
+                        Missing compulsory Logo
+                        </option>
+                        <option data-description="false" value="4871"
+                        data-critical="1">
+                        Missing compulsory marking
+                        </option>
+                        <option data-description="false" value="4872"
+                        data-major="1">
+                        Missing label according to client's requirement
+                        </option>
+                        <option data-description="false" value="4873"
+                        data-major="1">
+                        Missing logo pattern
+                        </option>
+                        <option data-description="false" value="4632"
+                        data-major="1">
+                        Poor setting of zipper
+                        </option>
+                        <option data-description="false" value="4653"
+                        data-major="1" data-minor="1">
+                        Wavy zipper
+                        </option>
+                        <option data-description="false" value="4874"
+                        data-major="1">
+                        Wrong accessory
+                        </option>
+                        <option data-description="false" value="4875"
+                        data-major="1">
+                        Wrong label according to client's requirement
+                        </option>
+                        </optgroup>
+                        <optgroup label="Appearance">
+                        <option data-description="false" value="4876"
+                        data-major="1" data-minor="1">
+                        Bad crinkle
+                        </option>
+                        <option data-description="false" value="4877"
+                        data-major="1" data-minor="1">
+                        Bad ironing
+                        </option>
+                        <option data-description="false" value="4658"
+                        data-major="1" data-minor="1">
+                        Coarse yarn
+                        </option>
+                        <option data-description="false" value="4878"
+                        data-major="1">
+                        Color off tone
+                        </option>
+                        <option data-description="false" value="4879"
+                        data-major="1" data-minor="1">
+                        Color shade variation between 2 parts
+                        </option>
+                        <option data-description="false" value="4880"
+                        data-major="1">
+                        Distorted shape due to pressing
+                        </option>
+                        <option data-description="false" value="4662"
+                        data-major="1">
+                        Irregular length
+                        </option>
+                        <option data-description="false" value="4881"
+                        data-major="1">
+                        Over pressed
+                        </option>
+                        <option data-description="false" value="4663"
+                        data-major="1">
+                        Poor plating
+                        </option>
+                        <option data-description="false" value="4664"
+                        data-major="1">
+                        Pulled thread
+                        </option>
+                        <option data-description="false" value="4665"
+                        data-major="1" data-minor="1">
+                        Pulled yarn
+                        </option>
+                        <option data-description="false" value="4882"
+                        data-major="1">
+                        Sewn in wrong fabric direction
+                        </option>
+                        <option data-description="false" value="4883"
+                        data-major="1">
+                        Sewn in wrong fabric side
+                        </option>
+                        <option data-description="false" value="4884"
+                        data-major="1">
+                        Uneven washing effect
+                        </option>
+                        <option data-description="false" value="4885"
+                        data-major="1" data-minor="1">
+                        Unmatched check
+                        </option>
+                        <option data-description="false" value="4886"
+                        data-major="1" data-minor="1">
+                        Unmatched stripe
+                        </option>
+                        </optgroup>
+                        <optgroup label="Assembly">
+                        <option data-description="false" value="4669"
+                        data-major="1">
+                        Assembly wrong
+                        </option>
+                        <option data-description="false" value="4887"
+                        data-major="1">
+                        Insecured part
+                        </option>
+                        <option data-description="false" value="4674"
+                        data-major="1" data-minor="1">
+                        Uneven lenght
+                        </option>
+                        </optgroup>
+                        <optgroup label="Cleanliness">
+                        <option data-description="false" value="4677"
+                        data-major="1">
+                        Chalk mark
+                        </option>
+                        <option data-description="false" value="4678"
+                        data-major="1" data-minor="1">
+                        Color stain
+                        </option>
+                        <option data-description="false" value="4679"
+                        data-major="1" data-minor="1">
+                        Dirt stain
+                        </option>
+                        <option data-description="false" value="4680"
+                        data-major="1" data-minor="1">
+                        Dust
+                        </option>
+                        <option data-description="false" value="4888"
+                        data-minor="1">
+                        Dust fibers attached on fabric surface
+                        </option>
+                        <option data-description="false" value="4681"
+                        data-major="1" data-minor="1">
+                        Glue mark
+                        </option>
+                        <option data-description="false" value="4682"
+                        data-major="1" data-minor="1">
+                        Glue stain
+                        </option>
+                        <option data-description="false" value="4683"
+                        data-major="1" data-minor="1">
+                        Loose thread
+                        </option>
+                        <option data-description="false" value="4685"
+                        data-major="1">
+                        Oil stain
+                        </option>
+                        <option data-description="false" value="4686"
+                        data-major="1" data-minor="1">
+                        Pen mark
+                        </option>
+                        <option data-description="false" value="4687"
+                        data-major="1" data-minor="1">
+                        Pencil mark
+                        </option>
+                        <option data-description="false" value="4688"
+                        data-major="1">
+                        Rust stain
+                        </option>
+                        <option data-description="false" value="4889"
+                        data-major="1" data-minor="1">
+                        Water stain
+                        </option>
+                        </optgroup>
+                        <optgroup label="Deterioration">
+                        <option data-description="false" value="4692"
+                        data-major="1">
+                        Broken product
+                        </option>
+                        <option data-description="false" value="4693"
+                        data-major="1">
+                        Burnt mark
+                        </option>
+                        <option data-description="false" value="4694"
+                        data-major="1">
+                        Chipped product
+                        </option>
+                        <option data-description="false" value="4890"
+                        data-major="1" data-minor="1">
+                        Crease mark
+                        </option>
+                        <option data-description="false" value="4695"
+                        data-major="1" data-minor="1">
+                        Deformation
+                        </option>
+                        <option data-description="false" value="4891"
+                        data-major="1" data-minor="1">
+                        Fold mark
+                        </option>
+                        <option data-description="false" value="4697"
+                        data-critical="1">
+                        Mildew
+                        </option>
+                        <option data-description="false" value="4892"
+                        data-major="1" data-minor="1">
+                        Scratch
+                        </option>
+                        <option data-description="false" value="4893"
+                        data-major="1" data-minor="1">
+                        Washing mark
+                        </option>
+                        <option data-description="false" value="4894"
+                        data-major="1">
+                        Wrinkle mark
+                        </option>
+                        </optgroup>
+                        <optgroup label="Embroidery">
+                        <option data-description="false" value="4897"
+                        data-major="1">
+                        Broken embroidery stitch
+                        </option>
+                        <option data-description="false" value="4898"
+                        data-major="1">
+                        Embroidery artwork not as specified
+                        </option>
+                        <option data-description="false" value="4899"
+                        data-major="1">
+                        Low embroidery stitch density
+                        </option>
+                        <option data-description="false" value="4900"
+                        data-major="1">
+                        Misplacement of embroidery
+                        </option>
+                        <option data-description="false" value="4901"
+                        data-major="1">
+                        Missing embroidery
+                        </option>
+                        <option data-description="false" value="4902"
+                        data-major="1">
+                        Slanted embroidery
+                        </option>
+                        </optgroup>
+                        <optgroup label="Foreign bodies">
+                        <option data-description="false" value="4702"
+                        data-critical="1">
+                        Blades object presence
+                        </option>
+                        <option data-description="false" value="4903"
+                        data-critical="1">
+                        Died insect
+                        </option>
+                        <option data-description="false" value="4703"
+                        data-critical="1">
+                        Exposed nails to sharp edge
+                        </option>
+                        <option data-description="false" value="4704"
+                        data-critical="1">
+                        Exposed staples to sharp point
+                        </option>
+                        <option data-description="false" value="4705"
+                        data-major="1" data-minor="1">
+                        Foreign fibre
+                        </option>
+                        <option data-description="false" value="4706"
+                        data-major="1" data-minor="1">
+                        Foreign thread
+                        </option>
+                        <option data-description="false" value="4707"
+                        data-major="1" data-minor="1">
+                        Foreign yarn
+                        </option>
+                        <option data-description="false" value="4708"
+                        data-critical="1">
+                        Hair
+                        </option>
+                        <option data-description="false" value="4709"
+                        data-critical="1">
+                        Knives object presence
+                        </option>
+                        <option data-description="false" value="4710"
+                        data-critical="1">
+                        Live insect
+                        </option>
+                        <option data-description="false" value="4711"
+                        data-critical="1">
+                        Needles object presence
+                        </option>
+                        <option data-description="false" value="4712"
+                        data-critical="1">
+                        Sharp foreign object presence
+                        </option>
+                        </optgroup>
+                        <optgroup label="Function">
+                        <option data-description="false" value="4716"
+                        data-major="1">
+                        Malfunction of zipper
+                        </option>
+                        <option data-description="false" value="4904"
+                        data-major="1" data-minor="1">
+                        Snap too loose to close or open
+                        </option>
+                        <option data-description="false" value="4905"
+                        data-major="1" data-minor="1">
+                        Snap too tight to close or open
+                        </option>
+                        <option data-description="false" value="4717"
+                        data-major="1" data-minor="1">
+                        Zipper slider running not smoothly
+                        </option>
+                        <option data-description="false" value="4906"
+                        data-major="1">
+                        Zipper tape too close to fly seam affecting zip function
+                        </option>
+                        </optgroup>
+                        <optgroup label="Material issue">
+                        <option data-description="false" value="4724"
+                        data-major="1" data-minor="1">
+                        Broken yarn
+                        </option>
+                        <option data-description="false" value="4728"
+                        data-major="1">
+                        Damaged material
+                        </option>
+                        <option data-description="false" value="4730"
+                        data-major="1">
+                        Dye bar
+                        </option>
+                        <option data-description="false" value="4732"
+                        data-major="1" data-minor="1">
+                        Fabric defect
+                        </option>
+                        <option data-description="false" value="4738"
+                        data-major="1">
+                        Hole
+                        </option>
+                        <option data-description="false" value="4908"
+                        data-major="1">
+                        Knitting bar
+                        </option>
+                        <option data-description="false" value="4909"
+                        data-major="1">
+                        Knitting defect
+                        </option>
+                        <option data-description="false" value="4910"
+                        data-major="1" data-minor="1">
+                        Knot
+                        </option>
+                        <option data-description="false" value="4907"
+                        data-minor="1">
+                        Loose fibers attached on fabric surface
+                        </option>
+                        <option data-description="false" value="4911"
+                        data-minor="1">
+                        Nep
+                        </option>
+                        <option data-description="false" value="4912"
+                        data-minor="1">
+                        Slub
+                        </option>
+                        <option data-description="false" value="4758"
+                        data-major="1">
+                        Weaving bar
+                        </option>
+                        <option data-description="false" value="4762"
+                        data-major="1">
+                        Wrong jacquard direction
+                        </option>
+                        <option data-description="false" value="4763"
+                        data-major="1">
+                        Wrong jacquard position
+                        </option>
+                        </optgroup>
+                        <optgroup label="Printing &amp; Painting">
+                        <option data-description="false" value="4766"
+                        data-major="1">
+                        Color off shade or not as specified
+                        </option>
+                        <option data-description="false" value="4913"
+                        data-major="1">
+                        Misplaced printing
+                        </option>
+                        <option data-description="false" value="4914"
+                        data-major="1">
+                        Missed printing
+                        </option>
+                        <option data-description="false" value="4915"
+                        data-major="1">
+                        Off printing
+                        </option>
+                        <option data-description="false" value="4767"
+                        data-major="1" data-minor="1">
+                        Poor printing
+                        </option>
+                        <option data-description="false" value="4916"
+                        data-major="1">
+                        Printing stain
+                        </option>
+                        <option data-description="false" value="4769"
+                        data-major="1">
+                        Wrong printing
+                        </option>
+                        </optgroup>
+                        <optgroup label="Seaming &amp; Stitching">
+                        <option data-description="false" value="4917"
+                        data-major="1">
+                        Broken stitch
+                        </option>
+                        <option data-description="false" value="4918"
+                        data-major="1">
+                        Dropped stitch
+                        </option>
+                        <option data-description="false" value="4919"
+                        data-major="1">
+                        Excessive stitch
+                        </option>
+                        <option data-description="false" value="4920"
+                        data-major="1">
+                        Folded seam
+                        </option>
+                        <option data-description="false" value="4921"
+                        data-major="1" data-minor="1">
+                        Improper stitch tension (too loose or too tight)
+                        </option>
+                        <option data-description="false" value="4777"
+                        data-major="1">
+                        Insecure seam end finishing
+                        </option>
+                        <option data-description="false" value="4922"
+                        data-major="1">
+                        Insecured back stitching
+                        </option>
+                        <option data-description="false" value="4923"
+                        data-major="1" data-minor="1">
+                        Irregular stitching
+                        </option>
+                        <option data-description="false" value="4779"
+                        data-major="1" data-minor="1">
+                        Loose stitch tension
+                        </option>
+                        <option data-description="false" value="4924"
+                        data-major="1">
+                        Missed bar tack
+                        </option>
+                        <option data-description="false" value="4781"
+                        data-major="1">
+                        Missed sewing operation
+                        </option>
+                        <option data-description="false" value="4925"
+                        data-major="1">
+                        Missed stitching
+                        </option>
+                        <option data-description="false" value="4783"
+                        data-major="1" data-minor="1">
+                        Needle chewing
+                        </option>
+                        <option data-description="false" value="4926"
+                        data-major="1">
+                        Needle hole
+                        </option>
+                        <option data-description="false" value="4785"
+                        data-major="1">
+                        Open seam
+                        </option>
+                        <option data-description="false" value="4786"
+                        data-major="1">
+                        Pleated seam
+                        </option>
+                        <option data-description="false" value="4787"
+                        data-major="1" data-minor="1">
+                        Puckered seam
+                        </option>
+                        <option data-description="false" value="4927"
+                        data-major="1">
+                        Run off stitch
+                        </option>
+                        <option data-description="false" value="4928"
+                        data-major="1">
+                        Seam folded opposite to specify direction
+                        </option>
+                        <option data-description="false" value="4929"
+                        data-major="1">
+                        Skipped stitch
+                        </option>
+                        <option data-description="false" value="4790"
+                        data-major="1">
+                        Twisted seam
+                        </option>
+                        <option data-description="false" value="4930"
+                        data-major="1">
+                        Unaligned seam
+                        </option>
+                        <option data-description="false" value="4931"
+                        data-major="1" data-minor="1">
+                        Uneven pleats length
+                        </option>
+                        <option data-description="false" value="4932"
+                        data-major="1" data-minor="1">
+                        Uneven seam length
+                        </option>
+                        <option data-description="false" value="4791"
+                        data-major="1" data-minor="1">
+                        Uneven stitch density
+                        </option>
+                        <option data-description="false" value="4792"
+                        data-major="1" data-minor="1">
+                        Uneven stitch tension
+                        </option>
+                        <option data-description="false" value="4933"
+                        data-major="1" data-minor="1">
+                        Uneven stitching
+                        </option>
+                        <option data-description="false" value="4934"
+                        data-major="1" data-minor="1">
+                        Unmatched join stitching
+                        </option>
+                        <option data-description="false" value="4935"
+                        data-major="1" data-minor="1">
+                        Wavy stitching
+                        </option>
+                        </optgroup>
+                        <optgroup label="Shape">
+                        <option data-description="false" value="4798"
+                        data-major="1">
+                        Asymmetrical shape
+                        </option>
+                        <option data-description="false" value="4801"
+                        data-major="1" data-minor="1">
+                        Inclined shape
+                        </option>
+                        <option data-description="false" value="4802"
+                        data-major="1">
+                        Irregular shape
+                        </option>
+                        <option data-description="false" value="4803"
+                        data-major="1" data-minor="1">
+                        Poor shape
+                        </option>
+                        <option data-description="false" value="4804"
+                        data-major="1" data-minor="1">
+                        Slanted shape
+                        </option>
+                        <option data-description="false" value="4936"
+                        data-major="1">
+                        Stretched shapes due to pressing
+                        </option>
+                        </optgroup>
+                        <optgroup label="Yarn &amp; Thread">
+                        <option data-description="false" value="4939"
+                        data-major="1">
+                        Colour yarn
+                        </option>
+                        <option data-description="false" value="4940"
+                        data-major="1">
+                        Double yarn
+                        </option>
+                        <option data-description="false" value="4941"
+                        data-major="1">
+                        Missing yarn
+                        </option>
+                        <option data-description="false" value="4942"
+                        data-major="1" data-minor="1">
+                        Snagging yarn
+                        </option>
+                        <option data-description="false" value="4943"
+                        data-major="1" data-minor="1">
+                        Thin yarn
+                        </option>
+                        <option data-description="false" value="4944"
+                        data-major="1" data-minor="1">
+                        Tight yarn
+                        </option>
+                        <option data-description="false" value="4945"
+                        data-major="1" data-minor="1">
+                        Untrimmed thread end
+                        </option>
+                        </optgroup>
+                        </select>
+                        </p>
+
+                        <p>
+                        <textarea class="InspectionDefectDescription save-fill automatic-id"></textarea>
+                        </p>
+
+                        </td>
+                        <td width="45">
+                        <input class="save-fill automatic-id critical" type="number" disabled="disabled">
+                        </td>
+                        <td width="45">
+                        <input class="save-fill automatic-id major" type="number" disabled="disabled">
+                        </td>
+                        <td width="45">
+                        <input class="save-fill automatic-id minor" type="number" disabled="disabled">
+                        </td>
+                        </tr>
+
+                        </tbody>
+
+                        <tbody>
+                        <tr>
+                        <th colspan="4" class="right"><strong>Sample size</strong></th>
+                        <td>315</td>
+                        <td>315</td>
+                        <td>315</td>
+                        </tr>
+                        <tr>
+                        <th colspan="4" class="right"><strong>Total found defects</strong></th>
+                        <td class="result result_conformed">
+                        <input class="save-fill automatic-id loaded" type="text" disabled="disabled" id="12910059-defect-critical-total">
+                        </td>
+                        <td class="">
+                        <input class="save-fill automatic-id loaded" type="text" disabled="disabled" id="12910059-defect-major-total">
+                        </td>
+                        <td class="result result_conformed">
+                        <input class="save-fill automatic-id loaded" type="text" disabled="disabled" id="12910059-defect-minor-total">
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="4" class="right"><strong>AQL allowed defects</strong></th>
+                        <td>
+                        <input type="text" disabled="disabled" id="12910059-allowed_critical" value="0">
+                        </td>
+                        <td>
+                        <input type="text" disabled="disabled" id="12910059-allowed_major" value="14">
+                        </td>
+                        <td>
+                        <input type="text" disabled="disabled" id="12910059-allowed_minor" value="21">
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="7">
+                        <p>
+                        <a onclick="" href="javascript:void(0);" class="">
+                        Add a defect
+                        </a>
+                        </p>
+                        </th>
+                        </tr>
+
+                        <tr>
+                        <th colspan="4" class="right"><strong>AQL Result</strong></th>
+                        <th colspan="3">
+                        <select class="InspectionStatus save-fill automatic-id loaded" id="12910059-aql-result">
+                        <option value="">--</option>
+                        <option value="conformed" data-remark="conformed (within AQL)">Conformed</option>
+                        <option value="notconformed" data-remark="not conformed (beyond AQL)">Not conformed</option>
+                        <option value="pending" data-remark="pending">Pending</option>
+                        <option value="notapplicable" data-remark="not applicable">N/A</option>
+                        <option value="actualfindings" data-remark="actual findings">Actual findings</option>
+                        </select>
+                        </th>
+                        </tr>
+
+                        <tr>
+                        <th colspan="7">
+                        <p>
+                        General defects found (Not included in the AQL result above)
+                        <select class="InspectionGeneralDefectsFound save-fill automatic-id loaded" id="12910059-aql-result">
+                        <option value="">--</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        </select>
+                        </p>
+                        <p class="note">
+                        Note: A defect becomes a General Defect when it appears on at least 20% of the inspected samples. To reflect an exact overview and description of the findings, the General Defect is excluded from the defect list of the above table.
+                        </p>
+                        </th>
+                        </tr>
+                        <tr>
+                        <td colspan="7">
+                        <p>
+                        General defect(s) description:
+                        </p>
+                        <textarea class="InspectionGeneralDefectsDescription save-fill automatic-id loaded" id="12910059-general-defects-description"></textarea>
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="7">
+                        <p>
+                        Non-conformity found
+                        <select class="InspectionNonConformityFound save-fill automatic-id loaded" id="12910047-non_conformity_found">
+                        <option value="">--</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        </select>
+                        </p>
+                        </th>
+                        </tr>
+                        <tr>
+                        <td colspan="7">
+                        <p>
+                        Non-conformity remark:
+                        </p>
+                        <textarea class="InspectionNonConformityRemark save-fill automatic-id remark loaded" id="12910059-non-conformity"></textarea>
+                        </td>
+                        </tr>
+                        <tr>
+                        <th colspan="4" class="right"><strong>Overall Result</strong></th>
+                        <td colspan="3" class="result result_notconformed">
+                        <select class="InspectionOverAllResult save-fill automatic-id loaded" id="12910059-overall-result">
+                        <option value="">--</option>
+                        <option value="conformed">Conformed</option>
+                        <option value="notconformed">Not conformed</option>
+                        <option value="pending">Pending</option>
+                        <option value="notapplicable">N/A</option>
+                        <option value="actualfindings">Actual findings</option>
+                        </select>
+                        </td>
+                        </tr>
+                        </tbody>
+                        </table>
+
+                    *@
+                    <!--<h2 id="">Defect photos</h2>
+
+
+                    <table cellpadding="0" cellspacing="0" class="tblDefectPhotos" id="tblDefectPhotos">
+                        <tbody>-->
+                    @*  <tr id="">
+                        <th width="20">
+                        A<span class="index">1</span>
+                        </th>
+                        <td width="565" class="">
+                        <span id=""></span>
+                        </td>
+                        <th width="100">
+                        &nbsp;
+                        </th>
+                        </tr> *@
+                    <!--<tr class="tr_1">
+                                <td width="20">
+                                    <button type="button" class="btnRemove" style="display:none;">
+                                        Remove
+                                    </button>
+                                </td>
+                                <td>
+                                    <select class="ddlDefectType save-fill automatic-id loaded">
+                                        <option value="">--</option>
+                                        <option value="DustORStain">Dust / Stain</option>
+                                        <option value="UncutThread">Uncut Thread</option>
+                                        <option value="Insecureloop">Insecure loop</option>
+                                        <option value="BrokenStitch">Broken Stitch</option>
+                                        <option value="OpenSeam">Open Seam</option>
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <select class="ddlDefectLevelName save-fill automatic-id loaded" id="12910059-overall-result">
+                                        <option value="">--</option>
+                                        <option value="Major">Major</option>
+                                        <option value="Minor">Minor</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="ddlDefectLevelNo save-fill automatic-id loaded" id="12910059-overall-result">
+                                        <option value="">--</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="file" class="fileInput fileInputDefectPhotos" multiple />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        <a href="javascript:void(0);" class="hrefAddDefectPhotos">
+                            Add Defect Photos
+                        </a>
+                    </p>-->
+
+                </div>
+
+
+
+                <div class="divQuantityCheck">
+                    <h3>Quantity Check</h3>
+                    <div class="connected online">
+                        <p>
+                            <strong>Select the allocated inspector</strong>
+                        </p>
+
+                        <p>
+
+                            <input id="" class="" type="radio"> Pakistan Team Inspector
+
+                        </p>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" class="help">
+                        <tbody>
+                            <tr>
+                                <td width="732">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>PO#</th>
+                                                <th>SKU#</th>
+                                                <th>Name</th>
+                                                <th>Quantity</th>
+                                                <th>Product type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>1</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN</td>
+                                                <td>2500</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>2</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</td>
+                                                <td>3000</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>3</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 160x200CM ASSORTED COLORS WOVEN</td>
+                                                <td>3450</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>4</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS WOVEN</td>
+                                                <td>2070</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>6</td>
+                                                <td>DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</td>
+                                                <td>2000</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="3">&nbsp;</td>
+                                                <td>Total:&nbsp;<strong>13020</strong></td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                    <h2>   Booking requirements</h2>
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="650">
+                                    Min. of products finished for inspection
+                                </th>
+                                <td width="60">
+                                    <input type="hidden" id="quantity_finished_12910060" value="100">
+                                    100%
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Min. of finished products packed into master cartons for inspection
+                                </th>
+                                <td>
+                                    <input type="hidden" id="quantity_packed_12910060" value="100">
+                                    100%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4> RESULTS</h4>
+
+
+
+                    <table cellpadding="0" cellspacing="0" class="table-results-12910060" id="table-quantity-check-12910045">
+                        <tbody>
+                            <tr>
+                                <th width="60" rowspan="3"><strong>PO #</strong></th>
+                                <th width="60" rowspan="3"><strong>Model #</strong></th>
+                                <th width="60" rowspan="3"><strong>Order Qty (Units)</strong></th>
+                                <th width="60" rowspan="3"><strong>Units/<br> Carton</strong></th>
+                                <th width="240" colspan="4"><strong>Available Quantity</strong></th>
+                                <th width="75" rowspan="3"><strong>Results</strong></th>
+                            </tr>
+                            <tr>
+                                <th width="120" colspan="2"><strong>Finished and Packed</strong></th>
+                                <th width="60" rowspan="2"><strong>Finished but not packed (Units)</strong></th>
+                                <th width="60" rowspan="2"><strong>Not Finished (Units)</strong></th>
+                            </tr>
+                            <tr>
+                                <th width="60"><strong>Units</strong></th>
+                                <th width="60"><strong>Cartons</strong></th>
+                            </tr>
+
+                            <tr class="product-line">
+                                <td width="60" class="simple_font">
+                                    <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="60" class="simple_font">
+                                    <span class="product-255962-modelNumber">6</span>
+                                </td>
+                                <td width="60">
+                                    <span class="product-255962-quantity product-quantity">2000</span>
+                                    <br><em>Min. finished: <span class="product-quantity-finished">2000</span></em>
+                                    <br><em>Min. packed: <span class="product-quantity-packed">2000</span></em>
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-units-carton">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-packed loaded" type="text" onchange="" id="12910045-255962-finished-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-finished-packed-cartons">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-not-packed loaded" type="text" onchange="" id="12910045-255962-finished-not-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-not-finished-units">
+                                </td>
+                                <td width="75" class="result result_actualfindings">
+                                    <select class="save-fill automatic-id loaded" id="12910045-255962-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="product-line">
+                                <td width="60" class="simple_font">
+                                    <span class="product-255959-purchaseOrderNumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="60" class="simple_font">
+                                    <span class="product-255959-modelNumber">2</span>
+                                </td>
+                                <td width="60">
+                                    <span class="product-255959-quantity product-quantity">3000</span>
+                                    <br><em>Min. finished: <span class="product-quantity-finished">3000</span></em>
+                                    <br><em>Min. packed: <span class="product-quantity-packed">3000</span></em>
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-units-carton">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-packed loaded" type="text" onchange="" id="12910045-255959-finished-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-finished-packed-cartons">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-not-packed loaded" type="text" onchange="" id="12910045-255959-finished-not-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-not-finished-units">
+                                </td>
+                                <td width="75" class="result result_conformed">
+                                    <select class="save-fill automatic-id loaded" id="12910045-255959-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="4" class="right"><strong>TOTAL</strong></th>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-packed-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-packed-units-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-packed-cartons-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-packed-cartons-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-not-packed-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-not-packed-units-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="not-finished-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-not-finished-units-total">
+                                </td>
+                                <td class="result result_conformed">
+                                    <select class="save-fill automatic-id loaded" data-field="overall-result" data-protocol_element_id="12910060" disabled="disabled" data-sync_value="12910060-overview-result" id="12910060-overall-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <p>
+                                        Result/Remarks:
+                                    </p>
+                                    <textarea class="save-fill automatic-id remark loaded" data-field="remarks" data-parent="12910060" data-protocol_element_id="12910045" id="12910045-remarks"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    <p>Reminder:</p>
+
+                                    <p>
+                                        Non-conform Quantity checks have important consequences on the reliability of your Quality Control.<br>
+                                        We strongly advise you to re-inspect your shipment in case the Quantity check is not conformed.
+                                    </p>
+
+                                    <p>Note: The total units' quantity check is based on the number of cartons available which are counted by the inspector, and the quantity of units/carton found on 3 cartons selected randomly for the inspection with SINGLE SKU; for the inspection with multi-references, at least 1 carton each SKU should be randomly picked for counting.</p>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+
+                    <br />
+
+                    <h3>Controls</h3>
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>Quantity and breakdown of products per export carton (on 3 cartons) was checked by inspector and is conformed to requirements</strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>
+                                        The inspector was able to count precisely and by himself the cartons quantity
+                                    </strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>
+                                        Were the cartons placed on the ground or lean on the wall directly in warehouse.
+                                    </strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

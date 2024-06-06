@@ -1,0 +1,71 @@
+﻿@using Model.Entity
+@model ClientAttachmentModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@Html.HiddenFor(x => x.UserId, new { id = "userId" })
+@Html.HiddenFor(x => x.UserFormId, new { id = "userFormId" })
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<ClientAttachmentModel>()
+            .Name("ClientAttachmentGrid")
+            .Columns(columns =>
+            {
+                columns.Command(command =>
+                {
+                    command.Custom("Download").Text("").IconClass("icon-download").Click("downloadClientAttachment")
+                .HtmlAttributes(new { title = "Download", data_toggle = "tooltip", @class = "grid-download-icon c_theme" });
+                    if (Model != null && Model.IsApproved == false)
+                    {
+                        command.Custom("Delete").Text("").IconClass("icon-cancel-square").Click("deleteAttachment")
+                    .HtmlAttributes(new { title = "Delete", data_toggle = "tooltip", @class = "grid-trash-icon c_theme" });
+                    }
+                    
+                }).Width(30).Title("Action");
+                columns.Bound(reason => reason.Id).Hidden(true);
+                columns.Bound(reason => reason.CreatedDate).Title("Created At").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(30);
+                columns.Bound(reason => reason.FileName).Title("File Name").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                columns.Bound(reason => reason.FileType).Title("Type").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(30);
+                columns.Bound(reason => reason.Description).Title("Description").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+            })
+            .Pageable()
+            .Scrollable()
+            .Resizable(x => x.Columns(true))
+            .ToolBar(e =>
+            {
+                if (Model != null && Model.IsApproved == false)
+                {
+                    e.Custom().Text("Add Attachment").HtmlAttributes(new { id = "addAttachment", @class = "floatRight" });
+
+                }
+            })
+            .Excel(excel => excel
+            .FileName("AttachmentsList.xlsx")
+            .Filterable(true)
+            .AllPages()
+            .ProxyURL(Url.Action("Excel_Export_Save", "Attachments")))
+            .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+            .HtmlAttributes(new { style = "height:100%;" })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(8)
+            .Read(read => read.Action("GetAttachmentsGrid", "Attachments", new { userId = Model != null ? Model.UserId : 0, userFormId = Model != null ? Model.UserFormId : 0 })))
+            .NoRecords(true)
+            )
+
+    </div>
+</div>
+
+@(Html.Kendo().Window()
+.Name("AddEditAttachment")
+.Title("")
+.Draggable(false)
+.Width(800)
+.Modal(true)
+.Visible(false)
+)
+
+<script src="~/js/pages/User/User.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>

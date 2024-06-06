@@ -1,0 +1,131 @@
+﻿@using Model.Entity;
+@model FactoryModel
+
+@Html.HiddenFor(x => x.Id, new { id = "factoryId" })
+@Html.HiddenFor(x => x.GeneralInformationId, new { id = "generalInformationId" })
+@Html.HiddenFor(x => x.IsFactoryEmailIncluded, new { id = "isEmailIncluded1" })
+@Html.HiddenFor(x => x.PayByLC, new { id = "isPayByLC" })
+<h1 style="font-weight:bold">Factory Detail</h1>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Factory Preset</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FactoryPreset)
+                .Placeholder("Enter Factory Preset")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Factory Preset", id = "FactoryPreset" })
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Factory Company Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FactoryCompanyName)
+                .Placeholder("Enter Factory Company Name")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Factory Company Name", id = "FactoryCompanyName" })
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Email Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Email)
+                                   .Placeholder("Enter Company Email Address")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Email Address", id = "FactoryEmail" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Company Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.CompanyPhoneNumber)
+                .Placeholder("Enter Company Phone Number")
+                .HtmlAttributes(new { @class = "w-100", required = "required", id = "CompanyPhoneNumber1", type = "tel", pattern = "03[0-9]{2}-(?!1234567)(?!1111111)(?!7654321)[0-9]{7}", ValidationMessage = "Enter exactly this format 0312-3456789" })
+                
+                )
+        </div>
+    </div>
+    
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Address)
+                .Placeholder("Enter Company Address")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Company Address", id = "CompanyAddress1" })
+                
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Country</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Country)
+                .Placeholder("Enter Country")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Country", id = "Country1" })
+                
+                )
+        </div>
+    </div>
+
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Province</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Province)
+                .Placeholder("Enter Province")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Province", id = "Province1" })
+                
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>City</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.City)
+                .Placeholder("Enter City")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter City", id = "City1" })
+                
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to be in copy of all emails to your factory ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.IsFactoryEmailIncluded)
+            .Checked(Model != null ? Model.IsFactoryEmailIncluded == true ? true : false : false)
+            .Events(ev => ev.Change("onChangeStatus1"))
+            .HtmlAttributes(new { style = "width:100px;" })
+            .Messages(c => c.Checked("Yes").Unchecked("No"))
+            
+            )
+    </div>
+</div>
+<br />
+<h3 style="font-weight:bold">Inspection Certificate</h3>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to pay by Letter of Credit (L/C) and require an inspection certificate ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.PayByLC)
+            .Checked(Model != null ? Model.PayByLC == true ? true : false : false)
+            .Events(ev => ev.Change("onChangePayByLC"))
+                .HtmlAttributes(new { style = "width:100px;" })
+                .Messages(c => c.Checked("Yes").Unchecked("No"))
+                
+                )
+    </div>
+</div>
+<br />

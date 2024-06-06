@@ -1,0 +1,70 @@
+﻿@using Model.Entity
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Mvc;
+@model UserModel
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/img/user2-160x160.png" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>@ViewBag.FirstName @ViewBag.LastName</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            @if (Model.IsAdmin == true)
+            {
+                <li class="@Html.IsSelected(controller: "Admin")">
+                    <a href="@Url.Action("Index", "Admin")">
+                        <i class="fa fa-th"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="@Html.IsSelected(controller: "InspectorAllocation")">
+                    <a href="@Url.Action("Index", "InspectorAllocation")">
+                        <i class="fa fa-edit"></i> <span>Inspector Allocation</span>
+                    </a>
+                </li>
+                <li class="@Html.IsSelected(controller: "Admin")">
+                    <a href="@Url.Action("SignUpRequests", "Admin")">
+                        <i class="fa fa-edit"></i> <span>User Account Requests</span>
+                    </a>
+                </li>
+            }
+            else if ((Model.IsAdmin == null || Model.IsAdmin == false) && Model.Role == 10002)
+            {
+                <li class="@Html.IsSelected(controller: "Home")">
+                    <a href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-th"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+            }
+            else if ((Model.IsAdmin == null || Model.IsAdmin == false) && Model.Role == 10003)
+            {
+                <li class="@Html.IsSelected(controller: "Home")">
+                    <a href="@Url.Action("Index", "Inspector")">
+                        <i class="fa fa-th"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

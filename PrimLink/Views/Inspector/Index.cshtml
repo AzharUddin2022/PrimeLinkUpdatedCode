@@ -1,0 +1,62 @@
+﻿@using Model.Entity
+@model UserModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@Html.HiddenFor(x => x.IsAdmin, new { id = "isAdmin" })
+@Html.HiddenFor(x => x.Id, new { id = "userId" })
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-12">
+                @(Html.Kendo().Grid<UserFormModel>()
+                    .Name("UserFormGrid")
+                    .Selectable()
+                    .Columns(columns =>
+                    {
+                        columns.Bound(reason => reason.Id).Hidden(true);
+                        columns.Bound(reason => reason.MissionReference).Title("Mission Reference").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ServiceDate).Title("Mission Date").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+@*                        columns.Bound(reason => reason.ProductLine).Title("Product Line").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+*@                        columns.Bound(reason => reason.ProductCategory).Title("Product Category").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+@*                        columns.Bound(reason => reason.InspectorName).Title("Inspector").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+*@                        columns.Bound(reason => reason.ClientName).Title("Created By").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.QuantityUnit).Title("Quantity Unit").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.DestinationCountry).Title("Destination Country").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ShipmentDate).Title("Shipment Date").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.UpdatedDate).Title("Updated at").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                    })
+                    .Pageable()
+                    .Filterable(filterable => filterable.Messages(m => m.IsFalse("No")).Mode(GridFilterMode.Row)
+                    .Messages(m => m.IsTrue("Yes")))
+                    .Selectable()
+                    .Resizable(x => x.Columns(true))
+                    .Scrollable()
+                    .ToolBar(e =>
+                    {
+                        e.Excel().Text("Export to Excel").HtmlAttributes(new { id = "excel", @class = "floatRight" });
+                    })
+                    .Excel(excel => excel
+                    .FileName("UserFormList.xlsx")
+                    .Filterable(true)
+                    .AllPages()
+                    .ProxyURL(Url.Action("Excel_Export_Save", "Home")))
+                    .HtmlAttributes(new { style = "height:100%;" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(8)
+                    .ServerOperation(false)
+                    .Read(read => read.Action("GetUserFormGrid", "Inspector", new { userId = Model.Id })))
+                    .NoRecords(true)
+                    .Events(ev => ev.Change("onRowSelect"))
+                    )
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="~/js/pages/Inspector/Inspector.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>

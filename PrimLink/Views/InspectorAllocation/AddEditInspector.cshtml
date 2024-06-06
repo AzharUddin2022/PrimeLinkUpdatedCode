@@ -1,0 +1,104 @@
+﻿@using Model.Entity
+@model InspectorAllocationModel
+
+<div id="htmlLoader" style="z-index:10005 !important;"></div>
+<style type="text/css">
+
+    .swal-overlay {
+        z-index: 10006;
+    }
+</style>
+
+<form asp-controller="InspectorAllocation" asp-action="AddEditInspector" id="frmCRUD" data-ajax="true" data-ajax-method="POST" data-ajax-failure="onFailure" data-ajax-success="onSuccess" kendo-validator="true" asp-antiforgery="true">
+    @Html.HiddenFor(model => model.Id, new { @id = "Id" })
+    @Html.HiddenFor(model => model.CreatedBy, new { @createdBy = "CreatedBy" })
+    @Html.HiddenFor(model => model.CreatedDate, new { @createdDate = "CreatedDate" })
+    @Html.HiddenFor(model => model.IsActive, new { @isActive = "IsActive" })
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row align-content-center">
+                    <div class="col-md-4">
+                        <label>User<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().DropDownListFor(x => x.UserId)
+							.HtmlAttributes(new { @class = "w-100", @id = "LoadUser", @required = "required" })
+							.OptionLabel("Select User")
+							.DataTextField("DisplayName")
+							.DataValueField("Id")
+							.BindTo(Model.dropdownBinderModel)
+							.Filter(FilterType.StartsWith)
+
+							)
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Job<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().DropDownListFor(x => x.UserFormId)
+                            .HtmlAttributes(new { @class = "w-100", @id = "LoadUserForm", @required = "required" })
+                            .OptionLabel("Select Job")
+                            .DataTextField("DisplayName")
+                            .DataValueField("Id")
+                            .BindTo(Model.dropdownBinderModel1)
+                            .DataSource(source =>
+                            {
+                                source.Read(read =>
+                                {
+                                    read.Action("Cascading_GetForms", "InspectorAllocation")
+                                        .Data("filterForms");
+                                })
+                                .ServerFiltering(true);
+                            })
+                            .Filter(FilterType.StartsWith)
+                            .Enable(false)
+                            .AutoBind(false)
+                            .CascadeFrom("LoadUser")
+							)
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Assigned To<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().DropDownListFor(x => x.InspectorId)
+							.HtmlAttributes(new { @class = "w-100", @id = "LoadInspector", @required = "required" })
+							.OptionLabel("Select Inspector")
+							.DataTextField("DisplayName")
+							.DataValueField("Id")
+							.BindTo(Model.dropdownBinderModel2)
+							.Filter(FilterType.StartsWith)
+
+							)
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row align-content-center">
+                    <div class="col-md-12">
+                        <div class="from-group mb-0">
+                            @(Html.Kendo().Button()
+							.Name("CancelInspector")
+							.Content("Cancel")
+							.HtmlAttributes(new { type = "button", @class = "btn-style-1" })
+							.Events(ev => ev.Click("onCancel"))
+							)
+                            @(Html.Kendo().Button()
+							.Name("SaveInspector")
+							.Content("Save")
+							.HtmlAttributes(new { type = "submit", @class = "btn-style-2" })
+							)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $("form").kendoValidator();
+    });
+</script>
+
+<script src="~/js/pages/Inspector/Inspector.js" asp-append-version="true"></script>

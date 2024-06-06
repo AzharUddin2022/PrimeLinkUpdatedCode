@@ -1,0 +1,51 @@
+﻿@using Model.Entity
+@model UserModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="row">
+            <label style="margin-top: 60px; padding: 0 15px; font-family: monospace; ">Role: @Model.RoleName</label>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @(Html.Kendo().TabStrip()
+                    .Name("tabstrip")
+                    .SelectedIndex(0)
+                    .Items(items =>
+                    {
+                        items.Add().Text("General information")
+                        .LoadContentFrom(Url.Action("Index", "GeneralInformation", new { userId = Model.Id, isAdmin = Model.IsAdmin, userFormId = Model.UserFormId })).HtmlAttributes(new { id = "GeneralInformationTabId" });
+
+                        items.Add().Text("Specifications Instructions")
+                        .LoadContentFrom(Url.Action("Index", "SpecificationsInstructions", new { userId = Model.Id, isAdmin = Model.IsAdmin, userFormId = Model.UserFormId })).HtmlAttributes(new { id = "SpecificationsInstructionsTabId" });
+
+                        items.Add().Text("Samples information")
+                        .LoadContentFrom(Url.Action("Index", "SampleInformation", new { userId = Model.Id, isAdmin = Model.IsAdmin, userFormId = Model.UserFormId })).HtmlAttributes(new { id = "SamplesInformationTabId" });
+
+                        items.Add().Text("Inspection Scope and AQL")
+                        .LoadContentFrom(Url.Action("Index", "InspectionScopeAndAQL", new { userId = Model.Id, isAdmin = Model.IsAdmin, userFormId = Model.UserFormId })).HtmlAttributes(new { id = "InspectionScopeAndAQLTabId" });
+
+                        items.Add().Text("Report")
+                        .LoadContentFrom(Url.Action("Index", "Report", new { userId = Model.Id, isAdmin = Model.IsAdmin, userFormId = Model.UserFormId })).HtmlAttributes(new { id = "ReportTabId" });
+                    })
+                    .HtmlAttributes(new { style = "width:100%;", id = "tabPanel" })
+                    )
+            </div>
+        </div>
+    </section>
+</div>
+
+@(Html.Kendo().Window()
+.Name("PopUp")
+.Title("")
+.Draggable(false)
+.Width(800)
+.Modal(true)
+.Visible(false)
+)
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>

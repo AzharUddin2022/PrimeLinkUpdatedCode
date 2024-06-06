@@ -1,0 +1,149 @@
+﻿@using Model.Entity
+@model UserModel
+
+<div id="htmlLoader" style="z-index:10008 !important;"></div>
+<style type="text/css">
+
+    .swal-overlay {
+        z-index: 10006;
+    }
+</style>
+
+<form asp-controller="Login" asp-action="SignUpUser" id="frmSignup" data-ajax="true" data-ajax-method="POST" data-ajax-failure="onFailureSignUp" data-ajax-success="onSuccessSignUp" kendo-validator="true" asp-antiforgery="true">
+    @Html.HiddenFor(model => model.Id, new { @id = "Id" })
+    @Html.HiddenFor(model => model.CreatedBy, new { @createdBy = "CreatedBy" })
+    @Html.HiddenFor(model => model.CreatedDate, new { @createdDate = "CreatedDate" })
+    @Html.HiddenFor(model => model.IsActive, new { @isActive = "IsActive" })
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row align-content-center">
+                    <div class="col-md-6">
+                        <label>First Name<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.FirstName)
+							.HtmlAttributes(new { @class = "w-100", @id = "txt_FirstName", @required = "required" })
+							.Placeholder("Enter First Name")
+							)
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Last Name<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.LastName)
+							.HtmlAttributes(new { @class = "w-100", @id = "txt_LastName", @required = "required" })
+							.Placeholder("Enter Last Name")
+							)
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-content-center">
+                    <div class="col-md-6">
+                        <label>Company<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.Company)
+                                .HtmlAttributes(new { @class = "w-100", @id = "txt_Company", @required = "required"/*, @onblur = "locNameKeyUp1(this)"*/ })
+                                .Placeholder("Enter UserName")
+                                )
+                            @*<label id="lblUsername" style="display:none;" class="k-form-error k-invalid-msg field-validation-error">Username already exists.</label>*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Country<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().DropDownListFor(x => x.Country)
+                                .HtmlAttributes(new { @class = "w-100", @id = "LoadCountry", @required = "required" })
+                                .OptionLabel("Select Country")
+                                .DataTextField("DisplayName")
+                                .DataValueField("DisplayName")
+                                .BindTo(Model.dropdownBinderModel1)
+                                .Filter(FilterType.StartsWith)
+
+                                )
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-content-center">
+                    <div class="col-md-6">
+                        <label>UserName<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.UserName)
+                            .HtmlAttributes(new { @class = "w-100", @id = "txt_UserName", @required = "required"/*, @onblur = "locNameKeyUp1(this)"*/ })
+                            .Placeholder("Enter UserName")
+							)
+                            @*<label id="lblUsername" style="display:none;" class="k-form-error k-invalid-msg field-validation-error">Username already exists.</label>*@
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email Address<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.Email)
+							.HtmlAttributes(new { @class = "w-100", @id = "txt_Email", @required = "required", @onblur = "locNameKeyUp(this)" })
+							.Placeholder("Enter Email Address")
+							)
+                            <label id="lblEmail" style="display:none;" class="k-form-error k-invalid-msg field-validation-error">Email already exists.</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-content-center">
+                    <div class="col-md-6">
+                        <label>Create Password<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.Password)
+							.HtmlAttributes(new { @class = "w-100", @id = "txt_Password", @required = "required" })
+							.Placeholder("Enter Password")
+							)
+                            <span id="casd" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Phone Number<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextBoxFor(x => x.PhoneNumber)
+                            .HtmlAttributes(new { @class = "w-100", @id = "txt_PhoneNumber", @required = "required" })
+                            .Placeholder("Enter Phone Number")
+                                .Events(e => e.Change("validateNumericInput"))
+                            )
+                            @*@(Html.Kendo().MaskedTextBoxFor(x => x.PhoneNumber)
+                                .Name("numericInput")
+                                .Mask("n")
+                                .HtmlAttributes(new { style = "width: 150px;", @required = "required" })
+                                )*@
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row align-content-center">
+                    <div class="col-md-12">
+                        <div class="from-group mb-0">
+                            @(Html.Kendo().Button()
+							.Name("CancelUser")
+							.Content("Cancel")
+							.HtmlAttributes(new { type = "button", @class = "btn-style-1" })
+                                .Events(ev => ev.Click("onCancelSignUp"))
+							)
+                            @(Html.Kendo().Button()
+							.Name("SaveUser")
+							.Content("Create my Account")
+							.HtmlAttributes(new { type = "submit", @class = "btn-style-1" })
+							)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $("form").kendoValidator();
+
+        
+    });
+</script>
+
+<script src="~/js/pages/Admin/Admin.js" asp-append-version="true"></script>

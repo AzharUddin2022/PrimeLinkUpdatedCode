@@ -1,0 +1,122 @@
+﻿@using Model.Entity
+@model UserModel
+@{
+    ViewData["Title"] = "Inspector Panel";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Inspector Allocation
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>@ViewBag.Users</h3>
+
+                        <p>Users</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>@ViewBag.Inspectors</h3>
+
+                        <p>Inspectors</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-md-12">
+                @(Html.Kendo().Grid<InspectorAllocationModel>()
+                    .Name("InspectorGrid")
+                    .Columns(columns =>
+                    {
+                        columns.Command(command =>
+                        {
+                            command.Custom("Edit").Text("").IconClass("icon-pencil7").Click("editInspector")
+                            .HtmlAttributes(new { title = "Edit", data_toggle = "tooltip", @class = "grid-edit-icon c_blue" }).Visible("isDestroyVisible");
+                            command.Custom("Delete").Text("").IconClass("icon-cancel-square").Click("deleteInspector")
+                            .HtmlAttributes(new { title = "Delete", data_toggle = "tooltip", @class = "grid-trash-icon c_theme" }).Visible("isDestroyVisible");
+                        }).Width(20).Title("Action");
+                        columns.Bound(reason => reason.Id).Hidden(true);
+                        columns.Bound(reason => reason.InspectorId).Hidden(true);
+                        columns.Bound(reason => reason.UserFormId).Hidden(true);
+                        columns.Bound(reason => reason.UserId).Hidden(true);
+                        columns.Bound(reason => reason.UserName).Title("Client").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.UserFormName).Title("Form Name").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.InspectorName).Title("Assigned To").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                    })
+                    .Pageable()
+                    .Resizable(x => x.Columns(true))
+                    .Scrollable()
+                    .ToolBar(e =>
+                    {
+                        e.Custom().Text("Allocate Inspector").HtmlAttributes(new { id = "addInspector", @class = "floatRight" });
+                        e.Excel().Text("Export to Excel").HtmlAttributes(new { id = "excel", @class = "floatRight" });
+                    })
+                    .Excel(excel => excel
+                    .FileName("InspectorList.xlsx")
+                    .Filterable(true)
+                    .AllPages()
+                    .ProxyURL(Url.Action("Excel_Export_Save", "InspectorAllocation")))
+                    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+                    .HtmlAttributes(new { style = "height:100%;" })
+                    .Events(events => events.DataBound("onDataBound"))
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(8)
+                    .ServerOperation(false)
+                    .Read(read => read.Action("GetInspectorGrid", "InspectorAllocation")))
+                    .NoRecords(true)
+                    )
+
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>
+
+@(Html.Kendo().Window()
+.Name("AddEditInspector")
+.Title("")
+.Draggable(false)
+.Width(800)
+.Modal(true)
+.Visible(false)
+)
+
+<script src="~/js/pages/Inspector/Inspector.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
+
+

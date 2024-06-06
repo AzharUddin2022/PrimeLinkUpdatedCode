@@ -1,0 +1,58 @@
+﻿@using Model.Entity;
+@model List<AttachmentModel>
+@for (int i = 0; i < Model.Count; i++)
+{
+    int iteration = Model[i].i;
+    if (i != 0)
+    {
+        iteration = i;
+    }
+    var sno = iteration + 1;
+    var id = "Title-" + iteration;
+    var lcounter = "lcounter_" + id;
+    var lchr_error = "lchr_error_" + id;
+    <div class="row divAttachmentLevel" id="@sno">
+        <div class="col-lg-12">
+            @Html.HiddenFor(x => Model[i].Id, new { @id = "Rowid-" + iteration })
+            @Html.HiddenFor(x => Model[i].i, new { @id = "iterator" })
+
+        </div>
+        <div class="col-lg-1" id="File_@iteration">
+            <div class="form-group">
+                <button class="btn" title="Download" type="button" id="downloadSi_@iteration" onclick="DownloadAttachment('div-@Model[i].Id-@sno')" style="border: none; color: green; border-bottom-color: currentcolor;">
+                    <i class="icon-download c_theme"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-3" id="CreatedDate_@iteration">
+            <div class="form-group">
+                <label style="font-weight:100">@Model[i].CreatedDate</label>
+            </div>
+        </div>
+
+        <div class="col-lg-3" id="FileName_@iteration">
+            <div class="form-group">
+                <label style="font-weight:100">@Model[i].FileName</label>
+            </div>
+        </div>
+
+        <div class="col-lg-4" id="Description_@iteration">
+            <div class="form-group">
+                <label style="font-weight:100">@Model[i].Description</label>
+            </div>
+        </div>
+
+        <div class="col-lg-1" id="deleteBtnSi_@iteration">
+            @if (Model[i].IsApproved == false)
+            {
+                <button class="btn" title="Delete" type="button" id="deleteSi_@iteration" onclick="DeleteAttachment('div-@Model[i].Id-@sno')" style="border: none; color: red; border-bottom-color: currentcolor;">
+                    <i class="icon-bin c_theme"></i>
+                </button>
+            }
+        </div>
+
+
+        <hr />
+    </div>
+}

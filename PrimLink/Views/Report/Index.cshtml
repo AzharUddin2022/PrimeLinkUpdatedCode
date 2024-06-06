@@ -1,0 +1,46 @@
+﻿@using Model.Entity
+@model GeneralInformationModel
+@{
+    ViewData["Title"] = "Report";
+    Layout = null;
+}
+
+@Html.HiddenFor(x => x.IsAdmin, new { id = "isAdmin" })
+@Html.HiddenFor(x => x.Id, new { id = "userId" })
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Products</th>
+            <th>Protocol Status</th>
+            <th>Report Status</th>
+            <th>Inspected By</th>
+            <th>Reviewed By</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.References)
+        {
+            <tr>
+                <td>@item.PO / @item.SKU</td>
+                <td style="background-color: #4FA35F; color: white;">
+                    Validated
+                </td>
+                <td style="background-color: #4FA35F; color: white;">Validated</td>
+                <td>@Model.AllocatedTo</td>
+                <td>Admin</td>
+                <td style="color: darkred;">
+                    <ul>
+                        <li>
+                            <a style="color: darkred;" data-value="@item.Id" href="@Url.Action("GetAdminFillReport", "Report", new { id = item.Id })" class="btnEdit">Fill the report</a>
+                        </li>
+                        <li>
+                            <a style="color: darkred;" data-value="@item.Id" href="@Url.Action("GetAdminViewReport", "Report", new { id = item.Id })" class="btnDelete">View the report</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

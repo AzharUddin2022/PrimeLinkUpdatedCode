@@ -1,0 +1,108 @@
+﻿@using Model.Entity
+@model ClientAttachmentModel
+
+<div id="htmlLoaderAttachment" style="z-index:10005 !important;"></div>
+<style type="text/css">
+
+    .swal-overlay {
+        z-index: 10006;
+    }
+</style>
+
+<form id="frmAttachmentCRUD" data-ajax="true" data-ajax-method="POST" data-ajax-failure="onFailure" data-ajax-success="onSuccess" kendo-validator="true" asp-antiforgery="true">
+    @Html.HiddenFor(model => model.Id, new { @id = "AttachmentId" })
+    @Html.HiddenFor(model => model.CreatedBy, new { @createdBy = "CreatedBy" })
+    @Html.HiddenFor(model => model.CreatedDate, new { @createdDate = "CreatedDate" })
+    @Html.HiddenFor(model => model.IsActive, new { @isActive = "IsActive" })
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row align-content-center">
+                    <div class="col-md-12">
+                        <label>Type<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().DropDownListFor(x => x.FileType)
+                                .HtmlAttributes(new { @class = "w-100", @id = "fileType", @required = "required" })
+                                .OptionLabel("Select Type")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .BindTo(new List<SelectListItem>() {
+                            new SelectListItem() {
+                            Text = "Booking",
+                            Value = "Booking"
+                            },
+                            new SelectListItem() {
+                            Text = "Mission Attachment",
+                            Value = "Mission Attachment"
+                            },
+                            new SelectListItem() {
+                            Text = "General Instructions",
+                            Value = "General Instructions"
+                            }
+                            })
+                                .Filter(FilterType.StartsWith)
+
+                                )
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-content-center">
+                    <div class="col-md-12">
+                        <label>Upload Attachment<span class="c_red">*</span></label>
+                        <div class="form-group">
+                            @(Html.Kendo().Upload()
+                                .Name("filesAttachment")
+                                .Multiple(true)
+                                .HtmlAttributes(new { aria_label = "File" })
+                                .Validation(validation => validation.MaxFileSize(4294967295).MinFileSize(1))
+                                )
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row align-content-center">
+                    <div class="col-md-12">
+                        <label>Description</label>
+                        <div class="form-group">
+                            @(Html.Kendo().TextAreaFor(x => x.Description)
+                                .Rows(3)
+                                .HtmlAttributes(new { @class = "w-100", @id = "txt_Description" })
+                                .Placeholder("Enter Description")
+                                )
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row align-content-center">
+                    <div class="col-md-3">
+                        @(Html.Kendo().Button()
+                            .Name("CancelAttachment")
+                            .Content("Cancel")
+                            .HtmlAttributes(new { type = "button", @class = "btn-style-2" })
+                            .Events(ev => ev.Click("onCancelAttachment"))
+                            )
+                    </div>
+                    <div class="col-md-3">
+                        @(Html.Kendo().Button()
+                            .Name("SaveAttachment")
+                            .Content("Save")
+                            .HtmlAttributes(new { type = "button", @class = "btn-style-1", style = "background: forestgreen;" })
+                            .Events(ev => ev.Click("onSaveAttachment"))
+                            )
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $("form").kendoValidator();
+
+
+    });
+</script>
+
+<script src="~/js/pages/User/User.js" asp-append-version="true"></script>

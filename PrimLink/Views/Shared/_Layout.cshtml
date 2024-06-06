@@ -1,0 +1,79 @@
+﻿@using Model.Entity
+@model UserModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Kendo.Mvc
+@using Kendo.Mvc
+@using Kendo.Mvc.UI
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="~/images/icons/favicon.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/png" href="images/LogoPrimIcon.ico" />
+    <title>@ViewData["Title"]</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    @*@{
+            await Html.RenderPartialAsync("_CSS");
+            await Html.RenderPartialAsync("_JS");
+        }
+
+
+
+        @RenderSection("Styles", required: false)*@
+</head>
+<body class="hold-transition skin-red sidebar-mini" onload="document.body.style.opacity='1'">
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            @*       @if (Model.Role == 10001)
+                {
+                    <a href="@Url.Action("Index", "Admin", new { area = "" })" class="logo">
+                        <!-- mini logo for sidebar mini 50x50 pixels -->
+                        <span class="logo-mini"><b>PL</b></span>
+                        <!-- logo for regular state and mobile devices -->
+                        <span class="logo-lg"><b>PrimLink</b></span>
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo">
+                        <!-- mini logo for sidebar mini 50x50 pixels -->
+                        <span class="logo-mini"><b>PL</b></span>
+                        <!-- logo for regular state and mobile devices -->
+                        <span class="logo-lg"><b>PrimLink</b></span>
+                    </a>
+                } *@
+            <!-- Header Navbar: style can be found in header.less -->
+            <partial name="_HeaderNavbar" model="Model" />
+        </header>
+
+        <!-- =============================================== -->
+        <!-- Left side column. contains the sidebar -->
+        <partial name="_LeftNavigation" model="Model" />
+        <!-- =============================================== -->
+        <!-- Content Wrapper. Contains page content -->
+        @RenderBody()
+        <!-- /.content-wrapper -->
+
+        <partial name="_Footer" model="Model" />
+
+        <!-- Control Sidebar -->
+        <partial name="_ControlSidebar" model="Model" />
+    </div>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

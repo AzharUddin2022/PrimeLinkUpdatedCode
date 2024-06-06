@@ -1,0 +1,191 @@
+﻿@using Model.Entity;
+@model VendorModel
+
+@Html.HiddenFor(x => x.Id, new { id = "vendorId" })
+@Html.HiddenFor(x => x.GeneralInformationId, new { id = "generalInformationId" })
+@Html.HiddenFor(x => x.IsVendorEmailIncluded, new { id = "isEmailIncluded" })
+<div class="row">
+    <div class="col-lg-3">
+        <h1 style="font-weight:bold">Vendor Detail</h1>
+
+    </div>
+    <div class="col-lg-3 align-self-end">
+        @if (Model.Id > 0)
+        {
+            @(Html.Kendo().SwitchFor(m => m.IsVendor)
+                .Checked(true)
+                .Events(ev => ev.Change("onChangeVendor"))
+                .HtmlAttributes(new { style = "width:100px;" })
+                .Messages(c => c.Checked("Yes").Unchecked("No"))
+                .Enabled(Model != null && Model.IsApproved == true ? false : true)
+                )
+        }
+        else
+        {
+            @(Html.Kendo().SwitchFor(m => m.IsVendor)
+                .Checked(Model != null ? Model.IsVendor == true ? true : false : false)
+                .Events(ev => ev.Change("onChangeVendor"))
+                .HtmlAttributes(new { style = "width:100px;" })
+                .Messages(c => c.Checked("Yes").Unchecked("No"))
+                .Enabled(Model != null && Model.IsApproved == true ? false : true)
+                )
+        }
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Vendor Preset</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.VendorPreset)
+                .Placeholder("Enter Vendor Preset")
+                .HtmlAttributes(new { @class = "w-100", id = "VendorPreset" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Vendor Company Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.VendorCompanyName)
+                .Placeholder("Enter Vendor Company Name")
+                .HtmlAttributes(new { @class = "w-100", id = "VendorCompanyName" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Company Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(x => x.CompanyPhoneNumber)
+                .HtmlAttributes(new { @class = "w-100", @id = "CompanyPhoneNumber", @required = "required", ValidationMessage = "Please Enter Vendor Company Phone Number" })
+                .Placeholder("Enter Company Phone Number")
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                .Events(e => e.Change("validateNumericInput"))
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Company Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.CompanyAddress)
+                .Placeholder("Enter Company Address")
+                .HtmlAttributes(new { @class = "w-100", id = "CompanyAddress" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Country</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Country)
+                .Placeholder("Enter Country")
+                .HtmlAttributes(new { @class = "w-100", id = "Country" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Province</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Province)
+                .Placeholder("Enter Province")
+                .HtmlAttributes(new { @class = "w-100", id = "Province" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>City</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.City)
+                .Placeholder("Enter City")
+                .HtmlAttributes(new { @class = "w-100", id = "City" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Nature Of Your Vendor</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.NatureOfVendor)
+                .Placeholder("Enter Nature Of Vendor")
+                .HtmlAttributes(new { @class = "w-100", id = "NatureOfVendor" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<h3 style="font-weight:bold">Vendor Contact</h3>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>First Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FirstName)
+                .Placeholder("Enter First Name")
+                .HtmlAttributes(new { @class = "w-100", id = "FirstName" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Last Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.LastName)
+                .Placeholder("Enter Last Name")
+                .HtmlAttributes(new { @class = "w-100", id = "LastName" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Email Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Email)
+                .Placeholder("Enter Email Address")
+                .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Email Address", id = "Email" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(x => x.PhoneNumber)
+                .HtmlAttributes(new { @class = "w-100", @id = "PhoneNumber", @required = "required", ValidationMessage = "Please Enter Phone Number" })
+                .Placeholder("Enter Phone Number")
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                .Events(e => e.Change("validateNumericInput"))
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to be in copy of all emails to your vendor ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.IsVendorEmailIncluded)
+            .Checked(Model != null ? Model.IsVendorEmailIncluded == true ? true : false : false)
+            .Events(ev => ev.Change("onChangeStatus"))
+            .HtmlAttributes(new { style = "width:100px;" })
+            .Messages(c => c.Checked("Yes").Unchecked("No"))
+            .Enabled(Model != null && Model.IsApproved == true ? false : true)
+            )
+    </div>
+</div>
+<br />

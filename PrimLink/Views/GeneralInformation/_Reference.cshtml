@@ -1,0 +1,83 @@
+﻿@using Model.Entity;
+@model List<ReferenceModel>
+@for (int i = 0; i < Model.Count; i++)
+{
+    int iteration = Model[i].i;
+    if (i != 0)
+    {
+        iteration = i;
+    }
+    var sno = iteration + 1;
+    var id = "Title-" + iteration;
+    var lcounter = "lcounter_" + id;
+    var lchr_error = "lchr_error_" + id;
+    <div class="row divReferenceLevel" id="@sno">
+        <div class="col-lg-12">
+            @Html.HiddenFor(m => Model[i].GeneralInformationId, new { @id = "GeneralInformationId-" + iteration })
+            @Html.HiddenFor(x => Model[i].Id, new { @id = "Rowid-" + iteration })
+            @Html.HiddenFor(x => Model[i].i, new { @id = "iterator" })
+            @Html.HiddenFor(x => Model[i].LevelNo, new { @id = "LevelNo-" + iteration })
+
+        </div>
+        <div class="col-lg-2" id="PO_@iteration">
+            <div class="form-group">
+                @(Html.Kendo().TextBoxFor(m => m[i].PO)
+                    .Placeholder("Enter PO#")
+                    .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter PO#", id = "PO" + iteration })
+                    .Enable(Model[i].IsApproved == true ? false : true)
+                    )
+            </div>
+        </div>
+
+        <div class="col-lg-2" id="SKU_@iteration">
+            <div class="form-group">
+                @(Html.Kendo().TextBoxFor(m => m[i].SKU)
+                    .Placeholder("Enter SKU#")
+                    .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter SKU#", id = "SKU" + iteration })
+                    .Enable(Model[i].IsApproved == true ? false : true)
+                    )
+            </div>
+        </div>
+
+        <div class="col-lg-2" id="Name_@iteration">
+            <div class="form-group">
+                @(Html.Kendo().TextBoxFor(m => m[i].Name)
+                    .Placeholder("Enter Name")
+                    .HtmlAttributes(new { @class = "w-100", id = "Name" + iteration })
+                    .Enable(Model[i].IsApproved == true ? false : true)
+                    )
+            </div>
+        </div>
+
+        <div class="col-lg-2" id="Quantity_@iteration">
+            <div class="form-group">
+                @(Html.Kendo().NumericTextBoxFor(m => m[i].Quantity)
+                    .Min(0)
+                    .Events(ev => ev.Change("OnChangeQuantity"))
+                    .HtmlAttributes(new { style = "width: 100%;", @class = "w-60", id = "Quantity" + iteration, required = "required", ValidationMessage = "Please Enter Quantity" })
+                    .Enable(Model[i].IsApproved == true ? false : true)
+                    )
+            </div>
+        </div>
+        <div class="col-lg-2" id="ProductType_@iteration">
+            <div class="form-group">
+                @(Html.Kendo().TextBoxFor(m => m[i].Name)
+                    .Placeholder("Enter Product Type")
+                    .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Product Type", id = "ProductType" + iteration })
+                    .Enable(Model[i].IsApproved == true ? false : true)
+                    )
+            </div>
+        </div>
+        <div class="col-lg-2" id="deleteBtn_@iteration">
+            @if (Model[i].IsApproved == false)
+            {
+                <button class="btn" title="Delete" type="button" id="delete_@iteration" onclick="DeleteLevel('div-@Model[i].Id-@sno-@Model[i].GeneralInformationId')" style="border: none; color: red; border-bottom-color: currentcolor;">
+                    <i class="icon-bin c_theme"></i>
+                </button>
+            }
+        </div>
+
+
+        <hr />
+    </div>
+}

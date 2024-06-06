@@ -1,0 +1,161 @@
+﻿@using Model.Entity;
+@model VendorModel
+
+@Html.HiddenFor(x => x.Id, new { id = "vendorId" })
+@Html.HiddenFor(x => x.GeneralInformationId, new { id = "generalInformationId" })
+@Html.HiddenFor(x => x.IsVendorEmailIncluded, new { id = "isEmailIncluded" })
+<h1 style="font-weight:bold">Vendor Detail</h1>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Vendor Preset</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.VendorPreset)
+                                   .Placeholder("Enter Vendor Preset")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Vendor Preset", id = "VendorPreset" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Vendor Company Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.VendorCompanyName)
+                                   .Placeholder("Enter Vendor Company Name")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Vendor Company Name", id = "VendorCompanyName" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Company Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.CompanyPhoneNumber)
+                                   .Placeholder("Enter Company Phone Number")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", id = "CompanyPhoneNumber", type = "tel", pattern = "03[0-9]{2}-(?!1234567)(?!1111111)(?!7654321)[0-9]{7}", ValidationMessage = "Enter exactly this format 0312-3456789" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Company Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.CompanyAddress)
+                                   .Placeholder("Enter Company Address")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Company Address", id = "CompanyAddress" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Country</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Country)
+                                   .Placeholder("Enter Country")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Country", id = "Country" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Province</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Province)
+                                   .Placeholder("Enter Province")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Province", id = "Province" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>City</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.City)
+                                   .Placeholder("Enter City")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter City", id = "City" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Nature Of Your Vendor</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.NatureOfVendor)
+                                   .Placeholder("Enter Nature Of Vendor")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Nature Of Vendor", id = "NatureOfVendor" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<h3 style="font-weight:bold">Vendor Contact</h3>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>First Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FirstName)
+                                   .Placeholder("Enter First Name")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter First Name", id = "FirstName" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Last Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.LastName)
+                                   .Placeholder("Enter Last Name")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Last Name", id = "LastName" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Email Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Email)
+                                   .Placeholder("Enter Email Address")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Email Address", id = "Email" })
+                                   
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.PhoneNumber)
+                                   .Placeholder("Enter Phone Number")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", id = "PhoneNumber", type = "tel", pattern = "03[0-9]{2}-(?!1234567)(?!1111111)(?!7654321)[0-9]{7}", ValidationMessage = "Enter exactly this format 0312-3456789" })
+                                   
+                            )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to be in copy of all emails to your vendor ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.IsVendorEmailIncluded)
+                            .Checked(Model != null ? Model.IsVendorEmailIncluded == true ? true : false : false)
+                            .Events(ev => ev.Change("onChangeStatus"))
+                            .HtmlAttributes(new { style = "width:100px;" })
+                            .Messages(c => c.Checked("Yes").Unchecked("No"))
+                )
+    </div>
+</div>
+<br />

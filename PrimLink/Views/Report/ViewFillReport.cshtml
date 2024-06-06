@@ -1,0 +1,1280 @@
+﻿@using Model.Entity
+@using System.IO;
+@model PrimLink.Helper.ReportModel
+@{
+    ViewData["Title"] = "View Report";
+    Layout = null;
+}
+
+<html>
+<head>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .sidenav {
+            font-family: "Roboto","Helvetica","Arial","sans-serif";
+            height: 100%;
+            width: 13%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+            .sidenav a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                color: #818181;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: #f1f1f1;
+                }
+
+        .main {
+            margin-left: 13%; /* Same as the width of the sidenav */
+            font-size: 28px; /* Increased text to enable scrolling */
+            padding: 10px 10px;
+            height: 150vh;
+            position: relative;
+            top: 41px;
+        }
+
+        .card {
+            /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+            /* On mouse-over, add a deeper shadow */
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+        /* Add some padding inside the card container */
+
+
+        .container {
+            padding: 2px 16px;
+            margin: 0 auto; /* Center the DIV horizontally */
+        }
+
+        body {
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 40px;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .fixed-header {
+            color: #fff;
+            background: #111;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            margin-left: 13%;
+        }
+
+
+        table {
+            border-left: 1px solid #bebebe;
+            border-top: 1px solid #bebebe;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #bebebe;
+            border-right: 1px solid #bebebe;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: normal;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea,
+        select {
+            border: none;
+            border: 2px dashed #bebebe;
+            border-radius: 0px;
+            color: inherit;
+            padding: 4px 3px;
+            text-align: left;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea {
+            background-color: inherit;
+            display: block;
+            font-size: inherit;
+        }
+
+        .upload-photo,
+        .upload-photo-paste,
+        .upload-take-picture,
+        .import-measurements {
+            border: 2px dashed #bebebe;
+            float: left;
+            height: 50px;
+            padding: 30px;
+            text-align: center;
+            vertical-align: middle;
+            width: auto;
+        }
+
+        a {
+            font-size: 15px
+        }
+
+        .help {
+            background-color: #677595;
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <form action="/Report/SaveReport" method="post" enctype="multipart/form-data" id="FrmSubmit">
+        <div class="main">
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3>Sampling informationGeneral information1</h3>
+
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <th width="100">Report #</th>
+                                            <td width="210">23056211-015</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Service date</th>
+                                            <td width="210">
+                                                2024/01/30
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Client name</th>
+                                            <td width="210">Ozeol</td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Inspection type</th>
+                                            <td width="210">
+                                                PSI
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Your reference</th>
+                                            <td width="210" class="simple_font">
+                                                6500007050 - 0006002392
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">PO number</th>
+                                            <td width="210" class="simple_font">
+
+                                                <span class="products-purchaseOrderNumber">6500007050 - 0006002392</span>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Vendor name</th>
+                                            <td width="210">
+                                                ALEENA INDUSTRIES
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Product name</th>
+                                            <td width="210" class="simple_font">
+
+                                                <span class="products-name">
+                                                    DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN, DYED FITTED
+                                                    SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN , DYED FITTED SHEET 100% COTTON 78
+                                                    FILS 160x200CM ASSORTED COLORS WOVEN , DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS
+                                                    WOVEN , DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Total ordered quantity</th>
+                                            <td width="210">
+                                                <span class="products-quantity">13020</span>
+                                                pieces
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Inspected sample size</th>
+                                            <td width="210">
+                                                315 pieces
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Nbr Family / Nbr Ref</th>
+                                            <td width="210">
+                                                /5
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Approval sample(s) available</th>
+                                            <td width="210"> No </td>
+                                        </tr>
+                                        <tr>
+                                            <th width="100">Destination Country</th>
+                                            <td width="210">
+                                                France
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td colspan="5">
+                                                <h3> YOUR PRODUCT :</h3>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">
+                                                @{
+                                                    //var uploadsDirectory = Directory.GetCurrentDirectory() + "\\wwwroot\\Uploads\\" + Model.listYourProduct[0].Path;
+                                                    var imagePath = "/Uploads/" + Model.listYourProduct[0].Path;
+                                                }
+                                                <input type="image" src=@imagePath />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                    </tbody>
+                </table>
+
+                <h3>  IMPORTANT REMARKS </h3>
+
+                <table cellpadding="0" cellspacing="0" id="table-remarks">
+                    <tr>
+                        <th width="20" class="center">1</th>
+                        <td width="668">
+                            Workmanship check is not conformed (beyond AQL).<br>
+                            Critical defects: 0<br>
+                            Major defects: 15<br>
+                            Minor defects: 0<br>
+                            Reminder of maximum allowed defects based on the AQL: Critical: 0, Major: 14, Minor: 21<br>
+                            <br>
+                            <br>
+                        </td>
+                    </tr>
+                </table>
+                <table id="tblDoc" class="doc-Table" cellpadding="0" cellspacing="0">
+                    <tbody>
+
+                        @foreach (var d in Model.listImportantRemark)
+                        {
+                            <tr class="tr_1">
+                                <td width="20" rowspan="2">
+                                    -
+                                </td>
+                                <td>
+                                    <p>
+                                        @d.RemarkType
+                                    </p>
+                                </td>
+                                <td width="690">
+                                    <textarea class="textareaForAddARemark" disabled>@d.Description </textarea>
+                                </td>
+                            </tr>
+                            <tr class="tr_2">
+                                <td colspan="5">
+                                    @{
+                                        var imagePath2 = "/Uploads/" + d.FilePath;
+                                    }
+                                    <input type="image" src=@imagePath2 />
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+
+                <h3>
+                    Customer special checkpoints
+                </h3>
+
+                <div class="divCustomerSpecialCheckpoints">
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="600">Client's special specification and requirements</th>
+                                <th width="110">Result</th>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    @foreach (var d in Model.listCustomerSpecialCheckpoint)
+                    {
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <th width="20" class="center">
+                                        @d.Type
+                                    </th>
+                                    <th width="555">
+                                        <ul>
+                                            <li>
+                                                <strong>Seal 5pcs production samples at factory, and factory will send them to the client office.</strong><br>
+                                                &nbsp;
+                                            </li>
+                                            <li><strong>For all household linen products, we will have to leave sealed production samples in the supplier's warehouse. We should indicate this info when placing the booking. We should seal one pc of each item. Before we seal the samples, please check the dimensions, workmanship &amp; thread count of the samples. A separate remark needs to be added to show the result of the checkpoints of the samples. Updated by Doris Tang on 11/16/2023</strong></li>
+                                        </ul>
+
+                                    </th>
+                                    <td width="110" class="result result_">
+                                        @d.Result
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <textarea class="textA save-fill automatic-id remark loaded" rows="5" cols="190" disabled>@d.Description </textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="730">
+                                        @{
+                                            var imagePath2 = "/Uploads/" + d.FilePath;
+                                        }
+                                        <input type="image" src=@imagePath2 />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    }
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="600" class="right"><strong>Overall Result</strong></th>
+                                <td width="110" class="result result_notconformed">
+                                    <span class="CustomerSpecialCheckPointOverAllResult">
+                                        @Model.listCustomerSpecialCheckpoint[0].OverallResult
+                                    </span>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+                <div class="divWORKMANSHIP">
+                    <h3>A - WORKMANSHIP</h3>
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label>
+                            <input id="protocol_element-12223433-279683-inspected" class="protocol_update co_writer"
+                                   type="radio"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+
+                    <hr>
+
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">6</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">2</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">3</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">4</span>
+                    </h4>
+                    <h4 style="font-size: 18px;font-weight: bold;line-height: 1;margin: 10px 0px;">
+                        <span class="product-255962-name">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span> /
+                        <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span> /
+                        <span class="product-255962-modelNumber">1</span>
+                    </h4>
+                    <hr />
+
+
+                    <table cellpadding="0" cellspacing="0" class="help">
+                        <tbody>
+                            <tr>
+                                <td width="732">
+                                    <table class="Table" style="width:614.25pt; border-top:none; border-left:solid #333333 1.0pt; border-bottom:solid #333333 1.0pt; border-right:none; border:solid #333333 1.0pt" width="819">
+                                        <tbody>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">23056211-015</span></span></strong></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Inspection Scope</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">&nbsp;</p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">RECOMMENDED</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Sampling</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Batch sampling</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Checkpoints</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">6500007050 - 0006002392</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td rowspan="8" style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Workmanship check / Visual Check.</span></span></span></p>
+                                                </td>
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">SKU#</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Name</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Quantity</span></span></span></p>
+                                                </td>
+                                                <td style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Sample Size</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">1</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2500</span></span></span></p>
+                                                </td>
+                                                <td rowspan="5" style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">315</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3000</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 160x200CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">3450</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">4</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2070</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:32.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="43">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">6</span></span></span></p>
+                                                </td>
+                                                <td style="width:341.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="455">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2000</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:15.0pt">
+                                                <td colspan="2" style="width:373.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="498">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">TOTAL</span></span></span></p>
+                                                </td>
+                                                <td style="width:34.5pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="46">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">13,020</span></span></span></p>
+                                                </td>
+                                                <td style="width:54.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="72">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:15.0pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">315</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:33.0pt">
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:33.0pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">ISO 2859-1 Single sampling, General inspection, Inspection Level (II) per total quantity/ AQL: Critical (0); Major (2.5); Minor (4)</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Quantity check (Total order)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Yes</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:23.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:23.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Packaging/Packing/Specs (at least 1 unit/ref)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:23.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Yes</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:49.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:49.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Measurements</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">
+                                                        <span style="height:49.5pt">
+                                                            <span lang="EN-US" style="font-size:11.5pt">
+                                                                <span helvetica="" neue="" style="font-family:">
+                                                                    For the product: 5pcs per style<br>
+                                                                    For the carton: 1 carton for each style
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:82.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:82.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">On site tests </span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">
+                                                        <span style="height:82.5pt">
+                                                            <span lang="EN-US" style="font-size:11.5pt">
+                                                                <span helvetica="" neue="" style="font-family:">
+                                                                    Just the 6 tests listed below:<br>
+                                                                    - Adhesive test on the logo/printing<br>
+                                                                    - Color fastness check<br>
+                                                                    - Color shade check<br>
+                                                                    - GSM check, 3pcs per color<br>
+                                                                    - Thread count on 5pcs per style, 30pcs in total<br>
+                                                                    - Burn test (1 pc each style)
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:28.5pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:28.5pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Other checkpoints or comments.</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt">&nbsp;</p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Total Report(s)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">1</span></span></span></p>
+                                                </td>
+                                            </tr>
+                                            <tr style="height:14.25pt">
+                                                <td style="width:152.25pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="203">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">Workload (Man Day)</span></span></span></p>
+                                                </td>
+                                                <td colspan="4" style="width:462.0pt; border-top:solid #333333 1.0pt; border-left:none; border-bottom:none; border-right:solid #333333 1.0pt" width="616">
+                                                    <p class="xx" style="padding:3.0pt 3.0pt 3.0pt 3.0pt"><span style="height:14.25pt"><strong><span lang="EN-US" style="font-size:11.5pt"><span helvetica="" neue="" style="font-family:">2</span></span></strong></span></p>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <h2>
+                        SAMPLING INFORMATION
+                    </h2>
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    <p>Sampled cartons quantity is at least square root (√) of total cartons quantity of this lot.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table cellpadding="0" cellspacing="0" id="tblSampleInformation" class="tblSampleInformation">
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" width="120">PO #</th>
+                                <th rowspan="2" width="130">Model #</th>
+                                <th rowspan="2" width="105">Sample Size from packed CTNS</th>
+                                <th rowspan="2" width="105">Sample Size from finished un-packed</th>
+                                <th colspan="2" width="170">Inspected Carton</th>
+                            </tr>
+                            <tr>
+                                <th>CTN</th>
+                                <th>CTN #</th>
+                            </tr>
+
+                            @foreach (var d in Model.listSamplingInformation)
+                            {
+                                <tr class="SampleData">
+                                    <td width="120">
+                                        <span class="PONumber">@d.PONumber </span>
+                                    </td>
+                                    <td width="130">
+                                        <span class="ModelNumber">@d.ModelNumber</span>
+                                    </td>
+                                    <td width="105">
+                                        <span class="SampleSizeFromPackedCTNS">@Convert.ToInt32(d.SampleSizeFromPackedCTNS)</span>
+                                    </td>
+                                    <td width="105">
+                                        <span class="SampleSizeFromFinishedUnPacked">@Convert.ToInt32(d.SampleSizeFromFinishedUnPacked)</span>
+                                    </td>
+                                    <td width="40">
+                                        <span class="InspectedCartonCTN">@Convert.ToInt32(d.InspectedCartonCTN)</span>
+                                    </td>
+                                    <td width="120">
+                                        <span class="InspectedCartonNumber">@d.InspectedCartonNumber</span>
+                                    </td>
+                                </tr>
+                            }
+
+                            <tr>
+                                <th colspan="2" width="160" class="right"><strong>Total</strong></th>
+                                <td width="105">
+                                    <span class="TotalSampleSizePackedCTNS"> @Convert.ToInt32(Model.listSamplingInformation[0].TotalSampleSizePackedCTNS) </span>
+                                </td>
+                                <td width="105">
+                                    <span class="TotalSampleSizeFinishedUnpacked">@Convert.ToInt32(Model.listSamplingInformation[0].TotalSampleSizeFinishedUnpacked) </span>
+                                </td>
+                                <td width="40">
+                                    <span class="TotalInspectedCartonCTN">@Convert.ToInt32(Model.listSamplingInformation[0].TotalInspectedCartonCTN) </span>
+                                </td>
+                                <td width="120">
+                                    As above
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    The factory allows drawing samples from finished non-packed products.
+                                    <span class="FactoryAllowsDrawingSamples">@Model.listSamplingInformation[0].FactoryAllowsDrawingSamples </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    100% of the quantity is fully available for sampling.
+                                    <span class="QuantityAvailableForSampling">@Model.listSamplingInformation[0].QuantityAvailableForSampling </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Inspection standard</h2>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    ISO 2859-1 (ANSI/ASQ Z1.4)<br>
+                                    Single sampling, General inspection, Inspection Level II<br>
+
+                                    AQL:
+                                    Critical (0);
+                                    Major (2.5);
+                                    Minor (4)<br>
+                                    *This standard is a statistical tool to first determine how many samples should be inspected, and then define the acceptance quality limits for non-conform products. Based on that we can determine if your products quality is acceptable or not.<br>
+                                    Please note that the inspection result is based on the AQL table <u>AND</u> the other report sections: quantity check, product specifications, labeling, marking, packing, packaging, and on-site tests.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>RESULTS</h2>
+
+                    <table cellpadding="0" cellspacing="0" id="tbInspectionStandard">
+                        <tbody>
+                            <tr>
+                                <th rowspan="2" width="110">&nbsp;</th>
+                                <th rowspan="2" width="110">PO # / Model #</th>
+                                <th rowspan="2" width="45">Picture #</th>
+                                <th rowspan="2" width="45">Defect Photo</th>
+                                <th rowspan="2" width="200">Defect description</th>
+                                <th colspan="3" width="135">Defect classification</th>
+                            </tr>
+                            <tr>
+                                <th width="45">Critical</th>
+                                <th width="45">Major</th>
+                                <th width="45">Minor</th>
+                            </tr>
+                        </tbody>
+                        <tbody>
+
+                            @foreach (var d in Model.listInspectionStandardResult)
+                            {
+                                <tr class="tr_1">
+                                    <td width="110">
+                                        <span> - </span>
+                                    </td>
+                                    <td width="110">
+                                        <span> @d.POorModelNo </span>
+                                    </td>
+                                    <td width="110" class="">
+                                        <span>@("A" + d.PictureNo)</span>
+                                    </td>
+                                    <td width="110">
+                                        @{
+                                            var imagePath2 = "/Uploads/" + d.PhotoPath;
+                                        }
+                                        <input type="image" src=@imagePath2 />
+                                    </td>
+
+                                    <td width="110">
+                                        <span> @d.DefectDescription </span>
+                                    </td>
+                                    <td width="45">
+                                        <input class="save-fill automatic-id critical txtCritical" type="number" value="@d.Critical">
+                                    </td>
+                                    <td width="45">
+                                        <input class="save-fill automatic-id critical txtCritical" type="number" value="@d.Major">
+                                    </td>
+                                    <td width="45">
+                                        <input class="save-fill automatic-id critical txtCritical" type="number" value="@d.Minor">
+                                    </td>
+                                </tr>
+                            }
+
+
+                            <tr class="trSampleSize">
+                                <th colspan="5" class="right">
+                                    <strong>Sample size</strong>
+                                </th>
+                                <td>
+                                    <input class="txtSampleSizeCritical" type="text" value="@Model.listInspectionStandardResult[0].SampleSizeCritical">
+                                </td>
+                                <td class="">
+                                    <input class="txtSampleSizeMajor" type="text" value="@Model.listInspectionStandardResult[0].SampleSizeMajor">
+
+                                </td>
+                                <td class="">
+                                    <input class="txtSampleSizeMinor" type="text" value="@Model.listInspectionStandardResult[0].SampleSizeMinor">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="5" class="right">
+                                    <strong>Total found defects</strong>
+
+                                </th>
+                                <td class="result result_conformed">
+                                    <input class="TotalfounddefectsCritical" type="text" value="@Model.listInspectionStandardResult[0].TotalFoundDefectsCritical">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="TotalFoundDefectsMajor" type="text" value="@Model.listInspectionStandardResult[0].TotalFoundDefectsMajor">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="TotalFoundDefectsMinor" type="text" value="@Model.listInspectionStandardResult[0].TotalFoundDefectsMinor">
+                            </tr>
+
+                            <tr>
+                                <th colspan="5" class="right"><strong>AQL allowed defects</strong></th>
+                                <td class="result result_conformed">
+
+                                    <input class="AQLAllowedDefectsCritical" type="text" value="@Model.listInspectionStandardResult[0].AQLAllowedDefectsCritical">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="AQLAllowedDefectsMajor" type="text" value="@Model.listInspectionStandardResult[0].AQLAllowedDefectsMajor">
+                                </td>
+                                <td class="result result_conformed">
+                                    <input class="AQLAllowedDefectsMinor" type="text" value="@Model.listInspectionStandardResult[0].AQLAllowedDefectsMinor">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" class="right"><strong>AQL Results</strong></th>
+                                <td class="result result_conformed">
+                                    <span>@Model.listInspectionStandardResult[0].AQLResults</span>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <p>
+                                        General defects found (Not included in the AQL result above)
+                                        <span>@Model.listInspectionStandardResult[0].GeneralDefectNotIncludedAQLResultAbove</span>
+                                    </p>
+                                    <p class="note">
+                                        Note: A defect becomes a General Defect when it appears on at least 20% of the inspected samples. To reflect an exact overview and description of the findings, the General Defect is excluded from the defect list of the above table.
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                    <p>
+                                        General defect(s) description:
+                                    </p>
+                                    <textarea rows="7" cols="180" class="txtGeneralDefectDesc" disabled>@Model.listInspectionStandardResult[0].GeneralDefectDescription</textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <p>
+                                        Non-conformity found
+                                        <span>@Model.listInspectionStandardResult[0].NonConformityFound</span>
+
+                                    </p>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="8">
+                                    <p>
+                                        Non-conformity Remarks:
+                                    </p>
+                                    <textarea rows="7" cols="180" class="txtGeneralDefectDesc" disabled>@Model.listInspectionStandardResult[0].NonConformityRemark</textarea>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="7" class="right"><strong>Overall Result</strong></th>
+                                <td colspan="1" class="result result_notconformed">
+                                    Hard Coded Data 101
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+
+
+                <div class="divQuantityCheck">
+                    <h3>Quantity Check</h3>
+                    <div class="connected online">
+                        <p>
+                            <strong>Select the allocated inspector</strong>
+                        </p>
+
+                        <p>
+
+                            <input id="" class="" type="radio"> Pakistan Team Inspector
+
+                        </p>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" class="help">
+                        <tbody>
+                            <tr>
+                                <td width="732">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>PO#</th>
+                                                <th>SKU#</th>
+                                                <th>Name</th>
+                                                <th>Quantity</th>
+                                                <th>Product type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>1</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 90x190 CM ASSORTED COLORS WOVEN</td>
+                                                <td>2500</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>2</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 140x190CM ASSORTED COLORS WOVEN</td>
+                                                <td>3000</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>3</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 160x200CM ASSORTED COLORS WOVEN</td>
+                                                <td>3450</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>4</td>
+                                                <td>DYED FITTED SHEET 100% COTTON 78 FILS 180x200 CM ASSORTED COLORS WOVEN</td>
+                                                <td>2070</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6500007050 - 0006002392</td>
+                                                <td>6</td>
+                                                <td>DUVET COVER 100%COTON 220x240CM 78FILS ASSORTED WOVEN</td>
+                                                <td>2000</td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="3">&nbsp;</td>
+                                                <td>Total:&nbsp;<strong>13020</strong></td>
+                                                <td>&nbsp;</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+                    <h2>   Booking requirements</h2>
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="650">
+                                    Min. of products finished for inspection
+                                </th>
+                                <td width="60">
+                                    <input type="hidden" id="quantity_finished_12910060" value="100">
+                                    100%
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Min. of finished products packed into master cartons for inspection
+                                </th>
+                                <td>
+                                    <input type="hidden" id="quantity_packed_12910060" value="100">
+                                    100%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4> RESULTS</h4>
+
+
+
+                    <table cellpadding="0" cellspacing="0" class="table-results-12910060" id="table-quantity-check-12910045">
+                        <tbody>
+                            <tr>
+                                <th width="60" rowspan="3"><strong>PO #</strong></th>
+                                <th width="60" rowspan="3"><strong>Model #</strong></th>
+                                <th width="60" rowspan="3"><strong>Order Qty (Units)</strong></th>
+                                <th width="60" rowspan="3"><strong>Units/<br> Carton</strong></th>
+                                <th width="240" colspan="4"><strong>Available Quantity</strong></th>
+                                <th width="75" rowspan="3"><strong>Results</strong></th>
+                            </tr>
+                            <tr>
+                                <th width="120" colspan="2"><strong>Finished and Packed</strong></th>
+                                <th width="60" rowspan="2"><strong>Finished but not packed (Units)</strong></th>
+                                <th width="60" rowspan="2"><strong>Not Finished (Units)</strong></th>
+                            </tr>
+                            <tr>
+                                <th width="60"><strong>Units</strong></th>
+                                <th width="60"><strong>Cartons</strong></th>
+                            </tr>
+
+                            <tr class="product-line">
+                                <td width="60" class="simple_font">
+                                    <span class="product-255962-purchaseOrderNumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="60" class="simple_font">
+                                    <span class="product-255962-modelNumber">6</span>
+                                </td>
+                                <td width="60">
+                                    <span class="product-255962-quantity product-quantity">2000</span>
+                                    <br><em>Min. finished: <span class="product-quantity-finished">2000</span></em>
+                                    <br><em>Min. packed: <span class="product-quantity-packed">2000</span></em>
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-units-carton">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-packed loaded" type="text" onchange="" id="12910045-255962-finished-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-finished-packed-cartons">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-not-packed loaded" type="text" onchange="" id="12910045-255962-finished-not-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255962-not-finished-units">
+                                </td>
+                                <td width="75" class="result result_actualfindings">
+                                    <select class="save-fill automatic-id loaded" id="12910045-255962-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="product-line">
+                                <td width="60" class="simple_font">
+                                    <span class="product-255959-purchaseOrderNumber">6500007050 - 0006002392</span>
+                                </td>
+                                <td width="60" class="simple_font">
+                                    <span class="product-255959-modelNumber">2</span>
+                                </td>
+                                <td width="60">
+                                    <span class="product-255959-quantity product-quantity">3000</span>
+                                    <br><em>Min. finished: <span class="product-quantity-finished">3000</span></em>
+                                    <br><em>Min. packed: <span class="product-quantity-packed">3000</span></em>
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-units-carton">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-packed loaded" type="text" onchange="" id="12910045-255959-finished-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-finished-packed-cartons">
+                                </td>
+                                <td width="60" class="result">
+                                    <input class="save-fill automatic-id product-not-packed loaded" type="text" onchange="" id="12910045-255959-finished-not-packed-units">
+                                </td>
+                                <td width="60">
+                                    <input class="save-fill automatic-id loaded" type="text" onchange="" id="12910045-255959-not-finished-units">
+                                </td>
+                                <td width="75" class="result result_conformed">
+                                    <select class="save-fill automatic-id loaded" id="12910045-255959-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th colspan="4" class="right"><strong>TOTAL</strong></th>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-packed-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-packed-units-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-packed-cartons-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-packed-cartons-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="finished-not-packed-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-finished-not-packed-units-total">
+                                </td>
+                                <td>
+                                    <input class="save-fill automatic-id loaded" type="text" data-field="not-finished-units-total" data-protocol_element_id="12910045" disabled="disabled" id="12910045-not-finished-units-total">
+                                </td>
+                                <td class="result result_conformed">
+                                    <select class="save-fill automatic-id loaded" data-field="overall-result" data-protocol_element_id="12910060" disabled="disabled" data-sync_value="12910060-overview-result" id="12910060-overall-result">
+                                        <option value="">--</option>
+                                        <option value="conformed">Conformed</option>
+                                        <option value="notconformed">Not conformed</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="notapplicable">N/A</option>
+                                        <option value="actualfindings">Actual findings</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <p>
+                                        Result/Remarks:
+                                    </p>
+                                    <textarea class="save-fill automatic-id remark loaded" data-field="remarks" data-parent="12910060" data-protocol_element_id="12910045" id="12910045-remarks"></textarea>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td width="732" class="note">
+                                    <p>Reminder:</p>
+
+                                    <p>
+                                        Non-conform Quantity checks have important consequences on the reliability of your Quality Control.<br>
+                                        We strongly advise you to re-inspect your shipment in case the Quantity check is not conformed.
+                                    </p>
+
+                                    <p>Note: The total units' quantity check is based on the number of cartons available which are counted by the inspector, and the quantity of units/carton found on 3 cartons selected randomly for the inspection with SINGLE SKU; for the inspection with multi-references, at least 1 carton each SKU should be randomly picked for counting.</p>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+
+                    <br />
+
+                    <h3>Controls</h3>
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>Quantity and breakdown of products per export carton (on 3 cartons) was checked by inspector and is conformed to requirements</strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>
+                                        The inspector was able to count precisely and by himself the cartons quantity
+                                    </strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <table cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th width="610">
+                                    <strong>
+                                        Were the cartons placed on the ground or lean on the wall directly in warehouse.
+                                    </strong>
+                                </th>
+                                <td width="100">
+                                    <select class="save-fill automatic-id loaded" data-field="answer" data-protocol_element_id="12909947" id="12909947-answer">
+                                        <option value="">--</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                        <option value="notapplicable">N/A</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="730" colspan="3">
+                                    <input class="upload-photo automatic-id" multiple="" type="file" id="12910045-photos">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>

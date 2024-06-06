@@ -1,0 +1,904 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <style>
+
+        table {
+            border-left: 1px solid #bebebe;
+            border-top: 1px solid #bebebe;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid #bebebe;
+            border-right: 1px solid #bebebe;
+            padding: 5px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: normal;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea,
+        select {
+            border: none;
+            border: 2px dashed #bebebe;
+            border-radius: 0px;
+            color: inherit;
+            padding: 4px 3px;
+            text-align: left;
+            -webkit-appearance: none;
+            -webkit-border-radius: 0px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        input[type="url"],
+        textarea {
+            background-color: inherit;
+            display: block;
+            font-size: inherit;
+        }
+
+        .upload-photo,
+        .upload-photo-paste,
+        .upload-take-picture,
+        .import-measurements {
+            border: 2px dashed #bebebe;
+            float: left;
+            height: 50px;
+            padding: 30px;
+            text-align: center;
+            vertical-align: middle;
+            width: auto;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/js/FillReport.js"></script>
+
+</head>
+<body>
+
+    @using (Html.BeginForm("SaveReport", "Report", FormMethod.Post, new { enctype = "multipart/form-data", @id = "FrmSubmit" }))
+    {
+        <input type="submit" value="Submit" />
+        <div class="fixed-header">
+            <div class="container">
+                <h2>Report</h2>
+            </div>
+        </div>
+        <div class="sidenav">
+            <br />
+            <a href="#generalInfo">General Information</a>
+            <br />
+            <a href="#summaryForResult">Summary For Inspection Result</a>
+            <br />
+            <a href="#keyRemarks">Key Remarks</a>
+            <br />
+            <a href="#keyRemarksDetail">Key Remarks Detail</a>
+            <br />
+            <a href="#workmanship">Workmanship</a>
+            <br />
+            <a href="#productionQuantityStatus">Production Quantity Status</a>
+            <br />
+            <a href="#specificationsLabelingPackaging">Specifications, Labeling & Packaging</a>
+            <br />
+            <a href="#referenceWisePhotos">Reference Wise Photos</a>
+            <br />
+            <a href="#measurementData">Measurement Data</a>
+            <br />
+            <a href="#onSiteTest">On-Site Tests</a>
+            <br />
+            <a href="#additionalUsefulInformationAndPhotos">Additional Useful Information And Photos</a>
+        </div>
+        <div class="main">
+            <div>
+                <h1>Item #1</h1>
+                <table cellpadding="0" cellspacing="0" id="tblItem">
+                    <tbody>
+                        <tr>
+                            <th width="5">#</th>
+                            <th width="50">PO</th>
+                            <th width="65">Item</th>
+                            <th width="80">Description</th>
+                            <th width="80">Booked qty</th>
+                            <th width="30">Units / Carton</th>
+                            <th width="30">Packed units</th>
+                            <th width="30">Packed cartons</th>
+                            <th width="35">Finished unpacked</th>
+                            <th width="30">Not finished units</th>
+                            <th width="40">Overall result</th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td width="5" style="vertical-align: middle;" rowspan="1"><a href="javascript:void(0);">1</a></td>
+                            <td width="50">P57723</td>
+                            <td width="65">61270R2B</td>
+                            <td width="80"><a href="javascript:void(0);">N/A</a></td>
+                            <td width="80">20000</td>
+                            <td width="30">
+                                <input class="txtUnitsOrCartonForItem" type="number" min="0" />
+                            </td>
+                            <td width="30">
+                                <input class="txtPackedUnitsForItem" type="number" min="0" />
+                            </td>
+                            <td width="30">
+                                <input class="txtPackedCartonsForItem" type="number" min="0" />
+                            </td>
+                            <td width="35">
+                                <input class="txtFinishedUnpackedForItem" type="number" min="0" />
+                            </td>
+                            <td width="30">
+                                <input class="txtNotFinishedUnitsForItem" type="number" min="0" />
+                            </td>
+                            <td width="40" style="text-align: center; vertical-align: middle;" rowspan="1">
+                                <select class="ddlOverallResultForItem">
+                                    <option value="-"></option>
+                                    <option value="PASS">PASS</option>
+                                    <option value="PENDING">PENDING</option>
+                                    <option value="FAIL">FAIL</option>
+                                    <option value="NOTE">NOTE</option>
+                                    <option value="DELAY">DELAY</option>
+                                    <option value="N/A">N/A</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Sampling information</h2>
+                <p>Sampled cartons quantity is at least square root (√) of total cartons quantity of this lot.</p>
+                <table cellpadding="0" cellspacing="0" id="tableSamplinginformation">
+                    <tbody>
+                        <tr>
+                            <th width="120">PO #</th>
+                            <th width="130">Model #</th>
+                            <th width="105">Total cartons number</th>
+                            <th width="105">Selected carton number</th>
+                        </tr>
+                        <tr>
+                            <td width="120">
+                                <span>P57723</span>
+                            </td>
+                            <td width="130" class="simple_font">
+                                <span>61270R2B</span>
+                            </td>
+                            <td width="40">
+
+                                <input class="txtTotalCartonsNumForSamplingInfo" type="number" min="0" />
+                            </td>
+                            <td width="275">
+                                <input class="txtSelectedCartonsNumForSamplingInfo" type="number" min="0" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2>Item remark list</h2>
+                <a name="anchor-12223442-remark-list"></a>
+                <div class="connected online">
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label>
+                            <input id="protocol_element-12223433-279683-inspected" class="protocol_update co_writer"
+                                   type="radio" name="protocol_element-12223433-inspected" data-field="inspected_by" value="279683"
+                                   data-url="https://manage.asiaqualityfocus.com/dashboard/fullbridge/protocol_element/12223433/edit"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+                </div>
+                <table id="tblDoc" class="doc-Table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr class="tr_1">
+                            <td width="20" rowspan="2">
+                                <button type="button" class="" id="tblDoc">
+                                    Remove
+                                </button>
+                            </td>
+                            <td>
+                                <p>
+                                    <select class="ddlForAddARemark">
+                                        <option value="-"></option>
+                                        <option value="FAIL">FAIL</option>
+                                        <option value="PENDING">PENDING</option>
+                                        <option value="NOTE">NOTE</option>
+                                    </select>
+                                </p>
+                            </td>
+                            <td width="690">
+                                <textarea class="textareaForAddARemark"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <input type="file" id="FileUploadForAddARemark" class="fileInput" name="FileUploadForAddARemark" />
+                                <input type="hidden" class="hiddenField" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <a href="javascript:void(0);" class="hrefAddARemark">
+                        Add a remark
+                    </a>
+                </p>
+                <p>
+                    <a href="javascript:void(0);" class="hrefSaveARemark">
+                        Save Add a remark
+                    </a>
+                </p>
+                <h2 class="menu" id="">Item AQL defect list</h2>
+                <a name="anchor-12223442-aql-list"></a>
+                <div class="connected online">
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label for="protocol_element-12223434-279683-inspected">
+                            <input id="protocol_element-12223434-279683-inspected" class="protocol_update co_writer"
+                                   type="radio" name="protocol_element-12223434-inspected" data-field="inspected_by" value="279683"
+                                   data-url="https://manage.asiaqualityfocus.com/dashboard/fullbridge/protocol_element/12223434/edit"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+                </div>
+                <table cellpadding="0" cellspacing="0" id="tblItemAQLDefect">
+                    <tbody>
+                        <tr>
+                            <th width="40">Lot size</th>
+                            <th width="90">Inspection level</th>
+                            <th width="50">&nbsp;</th>
+                            <th width="70">Sample size</th>
+                            <th width="35">AQL</th>
+                            <th width="105">Max defects allowed</th>
+                            <th width="80">Defects found</th>
+                            <th width="70">AQL result</th>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">
+                                <input type="number" min="0" class="txtLotSizeForItemAQLDefect" />
+                            </td>
+                            <td rowspan="3">
+                                <select class="ddlInspectionlevelForItemAQLDefect" id="ddlInsplevelForItemAQLDefect">
+                                    <option value="">-</option>
+                                    <option value="level_1">Level I</option>
+                                    <option value="level_2">Level II</option>
+                                    <option value="level_3">Level III</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </td>
+                            <td><strong>Critical:</strong></td>
+                            <td>
+                                <input type="number" min="0" class="txtSampleSize_Critical_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <select class="ddlSampleSize_Critical_ForItemAQLDefect">
+                                    <option value="">-</option>
+                                    <option value="0">0</option>
+                                    <option value="0.01">0.01</option>
+                                    <option value="0.015">0.015</option>
+                                    <option value="0.025">0.025</option>
+                                    <option value="0.04">0.04</option>
+                                    <option value="0.065">0.065</option>
+                                    <option value="0.1">0.1</option>
+                                    <option value="0.15">0.15</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.4">0.4</option>
+                                    <option value="0.65">0.65</option>
+                                    <option value="1">1</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="2.5">2.5</option>
+                                    <option value="4">4</option>
+                                    <option value="6.5">6.5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectAllowed_Critical_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectsFound_Critical_ForItemAQLDefect" />
+                            </td>
+                            <td rowspan="3">
+                                <select class="ddlAOLResultForItemAQLDefect">
+                                    <option value="">-</option>
+                                    <option value="Pass">Pass</option>
+                                    <option value="Fail">Fail</option>
+                                    <option value="Fail (general defect)">Fail (general defect)</option>
+                                    <option value="N/A">N/A</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Major:</strong></td>
+                            <td>
+                                <input type="number" min="0" class="txtSampleSize_Major_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <select class="ddlSampleSize_Major_ForItemAQLDefect">
+                                    <option value="">-</option>
+                                    <option value="0">0</option>
+                                    <option value="0.01">0.01</option>
+                                    <option value="0.015">0.015</option>
+                                    <option value="0.025">0.025</option>
+                                    <option value="0.04">0.04</option>
+                                    <option value="0.065">0.065</option>
+                                    <option value="0.1">0.1</option>
+                                    <option value="0.15">0.15</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.4">0.4</option>
+                                    <option value="0.65">0.65</option>
+                                    <option value="1">1</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="2.5">2.5</option>
+                                    <option value="4">4</option>
+                                    <option value="6.5">6.5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectAllowed_Major_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectsFound_Major_ForItemAQLDefect" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minor:</strong></td>
+                            <td>
+                                <input type="number" min="0" class="txtSampleSize_Minor_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <select class="ddlSampleSize_Minor_ForItemAQLDefect">
+                                    <option value="">-</option>
+                                    <option value="0">0</option>
+                                    <option value="0.01">0.01</option>
+                                    <option value="0.015">0.015</option>
+                                    <option value="0.025">0.025</option>
+                                    <option value="0.04">0.04</option>
+                                    <option value="0.065">0.065</option>
+                                    <option value="0.1">0.1</option>
+                                    <option value="0.15">0.15</option>
+                                    <option value="0.25">0.25</option>
+                                    <option value="0.4">0.4</option>
+                                    <option value="0.65">0.65</option>
+                                    <option value="1">1</option>
+                                    <option value="1.5">1.5</option>
+                                    <option value="2.5">2.5</option>
+                                    <option value="4">4</option>
+                                    <option value="6.5">6.5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectAllowed_Minor_ForItemAQLDefect" />
+                            </td>
+                            <td>
+                                <input type="number" min="0" class="txtMaxDefectsFound_Minor_ForItemAQLDefect" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+
+                <h3>AQL defects</h3>
+                <table cellpadding="0" cellspacing="0" id="tblAQLDefects">
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th>Defect</th>
+                            <th>Remark content</th>
+                            <th width="50">Critical</th>
+                            <th width="50">Major</th>
+                            <th width="50">Minor</th>
+                        </tr>
+                    </tbody>
+                    <tbody class="tbodyAQLDefects">
+                        <tr class="tr_1">
+                            <td width="20" rowspan="2">
+                                <button type="button" class="" id="tblDoc">
+                                    Remove
+                                </button>
+                            </td>
+                            <td>
+                                <p>
+                                    <select class="ddlDefectsForAQLDefects">
+                                        <option value="">--</option>
+                                        <optgroup label="Custom defects">
+                                            <option data-description="true" value="5088"
+                                                    data-critical="1"
+                                                    data-major="1"
+                                                    data-minor="1">
+                                                Accessories
+                                            </option>
+
+                                        </optgroup>
+                                    </select>
+                                </p>
+                            </td>
+                            <td width="625">
+                                <p>
+                                    <textarea class="txtRemarkContentForAQLDefects"></textarea>
+                                </p>
+                            </td>
+                            <td width="50">
+                                <input class="txtCriticalForAQLDefects" type="number" min="0">
+                            </td>
+                            <td width="50">
+                                <input class="txtMajorForAQLDefects" type="number" min="0">
+                            </td>
+                            <td width="50">
+                                <input class="txtMinorForAQLDefects" type="number" min="0">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <input class="FileUploadForGeneralDefects fileInput"
+                                       multiple type="file">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <a href="javascript:void(0);"
+                       class="hrefAddAnAQLDefect">
+                        Add a general defect
+                    </a>
+                </p>
+
+                <h2 class="menu">
+                    Product
+                    information verification
+                </h2>
+                <a name="anchor-12223442-product-information"></a>
+                <div class="connected online">
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label for="protocol_element-12223435-279683-inspected">
+                            <input id="protocol_element-12223435-279683-inspected" class="protocol_update co_writer"
+                                   type="radio" name="protocol_element-12223435-inspected" data-field="inspected_by" value="279683"
+                                   data-url="https://manage.asiaqualityfocus.com/dashboard/fullbridge/protocol_element/12223435/edit"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+                </div>
+                <div class="toggle_container">
+                    <a href="#" class="">
+                        Toggle
+                    </a>
+                </div>
+                <div>
+                    <table cellpadding="0" cellspacing="0" class="noborder" id="tblShipperCartonPackaging">
+                        <tbody>
+                            <tr>
+                                <td style="width: 50%;" class="noborder nopadding">
+                                    <h3>Shipper carton packaging</h3>
+                                    <div>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <th width="125">&nbsp;</th>
+                                                    <th width="65">Result</th>
+                                                    <th width="100">Measured data</th>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="125">Shipper carton dimensions</td>
+                                                    <td width="65">
+                                                        <select class="ddlShipperCartonDimensions_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notmeasured">Not measured</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100">
+                                                        <input class="txtShipperCartonDimensions_MeasuredData" type="text" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">Shipper carton weight</td>
+                                                    <td width="65">
+                                                        <select class="ddlShipperCartonWeight_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notmeasured">Not measured</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100">
+                                                        <input class="txtShipperCartonWeight_MeasuredData" type="text" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">
+                                                        Shipper carton<br />
+                                                        markings / labeling
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlShipperCartonMarkingsLabeling_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">
+                                                        Packaging method<br />
+                                                        &amp; assortment
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlPackagingMethodAssortment_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td style="width: 50%;" class="noborder nopadding">
+                                    <h3>Inner packaging</h3>
+                                    <div>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <th width="125">&nbsp;</th>
+                                                    <th width="65">Result</th>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="125">
+                                                        Inner packaging<br />
+                                                        markings / labeling
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlInnerPackagingMarkingsLabeling">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">
+                                                        Packaging method<br />
+                                                        &amp; assortment
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlInnerPackagingMethodAssortment_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cellpadding="0" cellspacing="0" class="noborder" id="tblRetailPackaging">
+                        <tbody>
+                            <tr>
+                                <td style="width: 50%;" class="noborder nopadding">
+                                    <h3>Retail packaging</h3>
+                                    <div>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <th width="125">&nbsp;</th>
+                                                    <th width="65">Result</th>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="125">
+                                                        Retail packaging printings,<br />
+                                                        graphics &amp; labeling
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlRetailPackagingPrintings">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">User instructions</td>
+                                                    <td width="65">
+                                                        <select class="ddlRetailPackagingUserInstructions">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">Retail packaging method</td>
+                                                    <td width="65">
+                                                        <select class="ddlRetailPackagingMethods">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td style="width: 50%;" class="noborder nopadding">
+                                    <h3>Item</h3>
+                                    <div>
+                                        <table cellpadding="0" cellspacing="0">
+                                            <tbody>
+                                                <tr>
+                                                    <th width="125">&nbsp;</th>
+                                                    <th width="65">Result</th>
+                                                    <th width="100">Measured data</th>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="125">Item overall dimensions</td>
+                                                    <td width="65">
+                                                        <select class="ddlItemOverallDimensions_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notmeasured">Not measured</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100">
+                                                        <input class="txtItemOverallDimensions_MeasuredData" type="text" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">
+                                                        Other dimensions<br />
+                                                        (If applicable)
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlOtherDimensions_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notmeasured">Not measured</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100">
+                                                        <input class="txtOtherDimensions_MeasuredData" type="text" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">Item net weight</td>
+                                                    <td width="65">
+                                                        <select class="ddlItemNetWeight_Result">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notmeasured">Not measured</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100">
+                                                        <input class="txtItemNetWeight_MeasuredData" type="text" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">Item markings / labeling</td>
+                                                    <td width="65">
+                                                        <select class="ddlItemMarkingsLabeling">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">Item color</td>
+                                                    <td width="65">
+                                                        <select class="ddlItemColor">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="125">
+                                                        General construction<br />
+                                                        and material
+                                                    </td>
+                                                    <td width="65">
+                                                        <select class="ddlGeneralConstructionAndMaterial">
+                                                            <option value="">--</option>
+                                                            <option value="conformed">Conformed</option>
+                                                            <option value="notconformed">Not conformed</option>
+                                                            <option value="actualfindings">Actual findings</option>
+                                                            <option value="notapplicable">N/A</option>
+                                                            <option value="notverified">Not verified</option>
+                                                        </select>
+                                                    </td>
+                                                    <td width="100"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table cellpadding="0" cellspacing="0" class="noborder">
+                        <tbody>
+                            <tr></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2 class="menu" id="anchor-12223442-tests" data-protocol_element_id="12223442">On-site test results</h2>
+                <a name="anchor-12223442-tests"></a>
+                <div class="connected online">
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label for="protocol_element-12223436-279683-inspected">
+                            <input id="protocol_element-12223436-279683-inspected" class="protocol_update co_writer"
+                                   type="radio" name="protocol_element-12223436-inspected" data-field="inspected_by" value="279683"
+                                   data-url="https://manage.asiaqualityfocus.com/dashboard/fullbridge/protocol_element/12223436/edit"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+                </div>
+                <table cellpadding="0" cellspacing="0" id="tblOnSiteTestResults">
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th width="220">Test description</th>
+                            <th width="90">Sample size</th>
+                            <th width="50">Result</th>
+                            <th width="270">Result comment</th>
+                        </tr>
+                    </tbody>
+                    <tbody class="tbodyOnSiteTestResults">
+                        <tr class="tr_1">
+                            <td width="20" rowspan="2">
+
+                                <button type="button" class="mdl-button mdl-button--colored mdl-color--blue-grey mdl-color-text--white mdl-js-button mdl-js-ripple-effect dialog" id="dialog-{{ uniqueID }}-test">
+                                    Remove
+                                </button>
+                            </td>
+                            <td width="220">
+                                <textarea class="txtTestDescForOnSiteTestResults"></textarea>
+                            </td>
+                            <td width="90">
+                                <input class="txtSampleSizeForOnSiteTestResults" type="number" min="0" />
+                            </td>
+                            <td width="50">
+                                <select class="ddlResultsForOnSiteTestResults">
+                                    <option value="-"></option>
+                                    <option value="pass">Pass</option>
+                                    <option value="fail">Fail</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="note">Note</option>
+                                </select>
+                            </td>
+                            <td width="270">
+                                <textarea class="txtResultCommentsForOnSiteTestResults"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <input class="FileUploadForOnSiteTestResults fileInput" multiple type="file">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <a href="javascript:void(0);"
+                       class="hrefOnSiteTestResults">
+                        Add An on-site test
+                    </a>
+                </p>
+                <h2 class="menu" id="anchor-12223442-other-photos" data-protocol_element_id="12223442">Item other photos</h2>
+                <div class="connected online">
+                    <p>
+                        <strong>Select the allocated inspector</strong>
+                    </p>
+                    <p>
+                        <label for="protocol_element-12223437-279683-inspected">
+                            <input id="protocol_element-12223437-279683-inspected" class="protocol_update co_writer"
+                                   type="radio" name="protocol_element-12223437-inspected" data-field="inspected_by" value="279683"
+                                   data-url="https://manage.asiaqualityfocus.com/dashboard/fullbridge/protocol_element/12223437/edit"
+                                   checked="checked" />
+                            Pakistan Team Inspector
+                        </label>
+                    </p>
+                </div>
+                <input class="FileUploadItemOtherPhotos" multiple="" type="file" />
+            </div>
+        </div>
+
+    }
+
+
+</body>
+</html>

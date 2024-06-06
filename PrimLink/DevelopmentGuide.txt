@@ -1,0 +1,52 @@
+﻿
+Development Start Guide
+------------------------
+
+Add Interface IEmployeeRepository in Interface folder under Repository/Interface
+Add Class EmployeeRepository in Implementation folder under Repository/Implementation
+Inherit EmployeeRepository from GenericRepository<Employee>, IEmployeeRepository
+Add Constructor
+public EmployeeRepository(DbContext context)
+        {
+            Context = context;
+
+        }
+
+Add Property in IUniteOfWork.cs under Repository/Common/Interface 
+e.g.(IEmployeeRepository EmployeeRepository { get; })
+
+Add private variable and initialize this variable from DBContext in UniteOfWork.cs under Repository/Common/Implementation 
+e.g.
+(private IEmployeeRepository _employeeRepository;
+public IEmployeeRepository EmployeeRepository => _employeeRepository ?? (_employeeRepository = new EmployeeRepository(_dbContext));
+)
+
+Add Our ViewModel/Model for using on our cshtml page and controller in Model project under Entity folder
+
+Add Interface IEmployeeService in Interface folder under Service/Interface
+Add Class EmployeeService in Implementation folder under Service/Implementation
+Inherit EmployeeService from GenericServices<Employee>, IEmployeeService
+Add property e.g.(private readonly IEmployeeRepository _employeeRepository;)
+Add Constructor
+public EmployeeService()
+        {
+            UnitOfWork = new UnitOfWork();
+            _employeeRepository = UnitOfWork.EmployeeRepository;
+        }
+
+
+To add Database tables into Model project follow these command
+
+Goto Tool Menu/NuGet Package Manager/Package Manager Console
+Select Repository project from Default project dropdown
+Then type following command make sure in last in below command please change the tables name 
+
+Scaffold-DbContext "Server=DESKTOP-H2AU5IE; Database=PrimLinkDB; Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entity -f -UseDatabaseNames
+Scaffold-DbContext "Server=AREEB-PC; Database=PrimLinkDB; Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entity -f -UseDatabaseNames
+Scaffold-DbContext "data source=67.211.45.33; initial catalog=PrimLinkDB; user id=primlink; password=UzeEqgh3phb8gHrY1; TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entity -f -UseDatabaseNames
+After generate the above command make sure the following changes must be changed into baseAdminContext in Repository/Entity/baseAdminContext.cs
+
+	1)Inherite from "DBContext" to "IdentityDbContext<User, Role, Guid>, IDisposable" (in Repository/Entity/baseAdminContext.cs).
+	2)Copy to base.OnModelCreating(modelBuilder); in OnModelCreating Method.
+
+    

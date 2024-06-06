@@ -1,0 +1,87 @@
+﻿@using Model.Entity
+@model UserModel
+@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            User Account Requests
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">User Account Requests</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main row -->
+        <div class="row">
+            <div class="col-md-12">
+                @(Html.Kendo().Grid<UserModel>()
+                    .Name("UserRequestGrid")
+                    .Columns(columns =>
+                    {
+                        columns.Command(command =>
+                        {
+                            command.Custom("Approve").Text("").IconClass("icon-pencil7").Click("approveUser")
+                        .HtmlAttributes(new { title = "Approve", data_toggle = "tooltip", @class = "grid-edit-icon c_blue" }).Visible("isDestroyVisible");
+                            command.Custom("Reject").Text("").IconClass("icon-cancel-square").Click("rejectUser")
+                        .HtmlAttributes(new { title = "Reject", data_toggle = "tooltip", @class = "grid-trash-icon c_theme" }).Visible("isDestroyVisible");
+                        }).Width(40).Title("Action");
+                        columns.Bound(reason => reason.Id).Hidden(true);
+                        columns.Bound(reason => reason.FirstName).Title("First Name").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.LastName).Title("Last Name").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.UserName).Title("Username").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.Email).Title("Email Address").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.Company).Title("Company").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.Country).Title("Country").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.Status).Title("Status").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                    })
+                    .Pageable()
+                    .Scrollable()
+                    .Resizable(x => x.Columns(true))
+                    .ToolBar(e =>
+                    {
+                        e.Excel().Text("Export to Excel").HtmlAttributes(new { id = "excel", @class = "floatRight" });
+                    })
+                    .Excel(excel => excel
+                    .FileName("UserRequestList.xlsx")
+                    .Filterable(true)
+                    .AllPages()
+                    .ProxyURL(Url.Action("Excel_Export_Save", "Admin")))
+                    .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+                    .HtmlAttributes(new { style = "height:100%;" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(8)
+                    .ServerOperation(false)
+                    .Read(read => read.Action("GetUserRequestGrid", "Admin")))
+                    .NoRecords(true)
+                    )
+
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>
+
+@(Html.Kendo().Window()
+.Name("AddEditUserRequest")
+.Title("")
+.Draggable(false)
+.Width(800)
+.Modal(true)
+.Visible(false)
+)
+
+<script src="~/js/pages/Admin/Admin.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>
+
+
+

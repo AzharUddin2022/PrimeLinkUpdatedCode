@@ -1,0 +1,155 @@
+﻿@using Model.Entity;
+@model FactoryModel
+
+@Html.HiddenFor(x => x.Id, new { id = "factoryId" })
+@Html.HiddenFor(x => x.GeneralInformationId, new { id = "generalInformationId" })
+@Html.HiddenFor(x => x.IsFactoryEmailIncluded, new { id = "isEmailIncluded1" })
+@Html.HiddenFor(x => x.PayByLC, new { id = "isPayByLC" })
+<h1 style="font-weight:bold">Factory Detail</h1>
+
+@if (Model.Id > 0)
+{
+    @(Html.Kendo().SwitchFor(m => m.IsFactory)
+                    .Checked(true)
+                    .Events(ev => ev.Change("onChangeFactory"))
+                    .HtmlAttributes(new { style = "width:100px;" })
+                    .Messages(c => c.Checked("Yes").Unchecked("No"))
+                    .Enabled(Model != null && Model.IsApproved == true ? false : true)
+                    )
+}
+else
+{
+    @(Html.Kendo().SwitchFor(m => m.IsFactory)
+                .Checked(Model != null ? Model.IsFactory == true ? true : false : false)
+                .Events(ev => ev.Change("onChangeFactory"))
+                .HtmlAttributes(new { style = "width:100px;" })
+                .Messages(c => c.Checked("Yes").Unchecked("No"))
+                .Enabled(Model != null && Model.IsApproved == true ? false : true)
+                )
+}
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Factory Preset</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FactoryPreset)
+                .Placeholder("Enter Factory Preset")
+                .HtmlAttributes(new { @class = "w-100", id = "FactoryPreset" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Factory Company Name</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.FactoryCompanyName)
+                .Placeholder("Enter Factory Company Name")
+                .HtmlAttributes(new { @class = "w-100", id = "FactoryCompanyName" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Email Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Email)
+                                   .Placeholder("Enter Company Email Address")
+                                   .HtmlAttributes(new { @class = "w-100", required = "required", ValidationMessage = "Please Enter Email Address", id = "FactoryEmail" })
+                                   .Enable(Model != null && Model.IsApproved == true ? false : true)
+                            )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Company Phone Number</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(x => x.CompanyPhoneNumber)
+                .HtmlAttributes(new { @class = "w-100", @id = "CompanyPhoneNumber1", @required = "required", ValidationMessage = "Please Enter Company Phone Number" })
+                .Placeholder("Enter Company Phone Number")
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                .Events(e => e.Change("validateNumericInput"))
+                )
+        </div>
+    </div>
+    
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Address</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Address)
+                .Placeholder("Enter Company Address")
+                .HtmlAttributes(new { @class = "w-100", id = "CompanyAddress1" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>Country</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Country)
+                .Placeholder("Enter Country")
+                .HtmlAttributes(new { @class = "w-100", id = "Country1" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Province</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.Province)
+                .Placeholder("Enter Province")
+                .HtmlAttributes(new { @class = "w-100", id = "Province1" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <label>City</label>
+        <div class="form-group">
+            @(Html.Kendo().TextBoxFor(m => m.City)
+                .Placeholder("Enter City")
+                .HtmlAttributes(new { @class = "w-100", id = "City1" })
+                .Enable(Model != null && Model.IsApproved == true ? false : true)
+                )
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to be in copy of all emails to your factory ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.IsFactoryEmailIncluded)
+            .Checked(Model != null ? Model.IsFactoryEmailIncluded == true ? true : false : false)
+            .Events(ev => ev.Change("onChangeStatus1"))
+            .HtmlAttributes(new { style = "width:100px;" })
+            .Messages(c => c.Checked("Yes").Unchecked("No"))
+            .Enabled(Model != null && Model.IsApproved == true ? false : true)
+            )
+    </div>
+</div>
+<br />
+<h3 style="font-weight:bold">Inspection Certificate</h3>
+<br />
+<div class="row">
+    <div class="col-lg-6">
+        <label>Do you want to pay by Letter of Credit (L/C) and require an inspection certificate ?</label>
+
+        @(Html.Kendo().SwitchFor(m => m.PayByLC)
+            .Checked(Model != null ? Model.PayByLC == true ? true : false : false)
+            .Events(ev => ev.Change("onChangePayByLC"))
+                .HtmlAttributes(new { style = "width:100px;" })
+                .Messages(c => c.Checked("Yes").Unchecked("No"))
+                .Enabled(Model != null && Model.IsApproved == true ? false : true)
+                )
+    </div>
+</div>
+<br />

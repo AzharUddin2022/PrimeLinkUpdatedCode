@@ -1,0 +1,133 @@
+﻿@using Model.Common.Helper;
+@using Model.Entity;
+@model SpecificationsInstructionModel
+
+<form asp-controller="SpecificationsInstructions" asp-action="InsertUpdateSpecificationsInstructions" id="specificationsInstructionForm" data-ajax="true" data-ajax-failure="onFailure" data-ajax-success="onSuccess" kendo-validator="true" method="post" asp-antiforgery="true">
+    @Html.HiddenFor(x => x.Id, new { id = "Id" })
+    @Html.HiddenFor(x => x.UserId, new { id = "userId" })
+    @Html.HiddenFor(x => x.IsAdmin, new { id = "isAdmin" })
+    @Html.HiddenFor(x => x.UserFormId, new { id = "userFormId" })
+    @Html.HiddenFor(x => x.FinalReportToPerson, new { id = "isFinalReportToPerson" })
+    @Html.HiddenFor(x => x.FinalReportToVendor, new { id = "isFinalReportToVendor" })
+    @Html.HiddenFor(x => x.IsEmailIncluded, new { id = "isEmailIncluded2" })
+    @Html.HiddenFor(x => x.IsUrgent, new { id = "isUrgent" })
+    <div class="col-lg-12">
+        <h1 style="font-weight:bold">Specifications Instructions</h1>
+        <h3 style="font-weight:bold">Attachments</h3>
+        <br />
+        <div class="row">
+            <div class="col-lg-1">
+                <label for="File" class="k-form-label font-weight-bold">File</label>
+            </div>
+            <div class="col-lg-3">
+                <label for="CreatedAt" class="k-form-label font-weight-bold">Created At</label>
+            </div>
+            <div class="col-lg-3">
+                <label for="FileName" class="k-form-label font-weight-bold">File Name</label>
+            </div>
+            <div class="col-lg-4">
+                <label for="Description" class="k-form-label font-weight-bold">Description</label>
+            </div>
+            <div class="col-lg-1">
+                <label class="k-form-label font-weight-bold">Action</label>
+            </div>
+        </div>
+        <div class="from-group mb-0" id="referencesLevels" style="overflow-y:scroll; overflow-x:hidden">
+            <partial name="~/Views/SpecificationsInstructionsInspector/_Attachments.cshtml" model="Model.Attachments" />
+        </div>
+        <br />
+        <h3 style="font-weight:bold">Booking Details</h3>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>How many points of measurement are to be taken ?</label>
+                <div class="form-group">
+                    @(Html.Kendo().NumericTextBoxFor(m => m.MeasurementPoints)
+                        .Min(0)
+                        .HtmlAttributes(new { @class = "w-100", id = "MeasurementPoints", required = "required", ValidationMessage = "Please Enter Points of Measurement" })
+
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>How many differents size are to be checked ?</label>
+                <div class="form-group">
+                    @(Html.Kendo().NumericTextBoxFor(m => m.Sizes)
+                        .Min(0)
+                        .HtmlAttributes(new { @class = "w-100", id = "Sizes", required = "required", ValidationMessage = "Please Enter Sizes to be Checked" })
+
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <h3 style="font-weight:bold">Specific Instructions</h3>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Final Report (Send a copy to other persons)</label>
+                <div class="form-group">
+                    @(Html.Kendo().SwitchFor(m => m.FinalReportToPerson)
+                        .Checked(Model != null ? Model.FinalReportToPerson == true ? true : false : false)
+                        .Events(ev => ev.Change("onChangeStatus2"))
+                        .HtmlAttributes(new { style = "width:100px;" })
+                        .Messages(c => c.Checked("Yes").Unchecked("No"))
+
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Final Report (Send a copy to vendor)</label>
+                <div class="form-group">
+                    @(Html.Kendo().SwitchFor(m => m.FinalReportToVendor)
+                        .Checked(Model != null ? Model.FinalReportToVendor == true ? true : false : false)
+                        .Events(ev => ev.Change("onChangeStatus3"))
+                        .HtmlAttributes(new { style = "width:100px;" })
+                        .Messages(c => c.Checked("Yes").Unchecked("No"))
+
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>PrimLink Emails notifications (Send a copy to other persons)</label>
+                <div class="form-group">
+                    @(Html.Kendo().SwitchFor(m => m.IsEmailIncluded)
+                        .Checked(Model != null ? Model.IsEmailIncluded == true ? true : false : false)
+                        .Events(ev => ev.Change("onChangeStatus4"))
+                        .HtmlAttributes(new { style = "width:100px;" })
+                        .Messages(c => c.Checked("Yes").Unchecked("No"))
+
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Get your report faster! Same-Day reporting (+USD 30)</label>
+                <div class="form-group">
+                    @(Html.Kendo().SwitchFor(m => m.IsUrgent)
+                        .Checked(Model != null ? Model.IsUrgent == true ? true : false : false)
+                        .Events(ev => ev.Change("onChangeStatus5"))
+                        .HtmlAttributes(new { style = "width:100px;" })
+                        .Messages(c => c.Checked("Yes").Unchecked("No"))
+
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row" style="float:right">
+            <div class="col-md-12" id="eventBtns">
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("form").kendoValidator();
+    });
+</script>
+
+<script src="~/js/pages/User/User.js" asp-append-version="true"></script>

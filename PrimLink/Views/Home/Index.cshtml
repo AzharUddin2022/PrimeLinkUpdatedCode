@@ -1,0 +1,66 @@
+﻿@using Model.Entity
+@model UserModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+@Html.HiddenFor(x => x.IsAdmin, new { id = "isAdmin" })
+@Html.HiddenFor(x => x.Id, new { id = "userId" })
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-12">
+                @(Html.Kendo().Grid<UserFormModel>()
+                    .Name("UserFormGrid")
+                    .Columns(columns =>
+                    {
+                        columns.Command(command =>
+                        {
+                            command.Custom("Edit").Text("").IconClass("icon-pencil7").Click("editUser")
+                            .HtmlAttributes(new { title = "Edit", data_toggle = "tooltip", @class = "grid-edit-icon c_blue" });
+                            command.Custom("Delete").Text("").IconClass("icon-cancel-square").Click("deleteUser")
+                            .HtmlAttributes(new { title = "Delete", data_toggle = "tooltip", @class = "grid-trash-icon c_theme" });
+                        }).Width(40).Title("Action");
+                        columns.Bound(reason => reason.Id).Hidden(true);
+                        columns.Bound(reason => reason.MissionReference).Title("Mission Reference").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ProductLine).Title("Product Line").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ProductCategory).Title("Product Category").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.QuantityUnit).Title("Quantity Unit").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.DestinationCountry).Title("Destination Country").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ServiceDate).Title("Service Date").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.ShipmentDate).Title("Shipment Date").Format("{0:MM/dd/yyyy}").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                        columns.Bound(reason => reason.Approved).Title("Approved").Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").ShowOperators(false).SuggestionOperator(FilterType.Contains))).Width(40);
+                    })
+                    .Pageable()
+                    .Resizable(x => x.Columns(true))
+                    .Filterable(filterable => filterable.Messages(m => m.IsFalse("No")).Mode(GridFilterMode.Row)
+                    .Messages(m => m.IsTrue("Yes")))
+                    .Selectable()
+                    .Scrollable()
+                    .ToolBar(e =>
+                    {
+                        e.Custom().Text("Add Form").HtmlAttributes(new { id = "addForm", @class = "floatRight" });
+                        e.Excel().Text("Export to Excel").HtmlAttributes(new { id = "excel", @class = "floatRight" });
+                    })
+                    .Excel(excel => excel
+                    .FileName("UserFormList.xlsx")
+                    .Filterable(true)
+                    .AllPages()
+                    .ProxyURL(Url.Action("Excel_Export_Save", "Home")))
+                    .HtmlAttributes(new { style = "height:100%;" })
+                    .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(8)
+                    .ServerOperation(false)
+                    .Read(read => read.Action("GetUserFormGrid", "Home", new { userId = Model.Id })))
+                    .NoRecords(true)
+                    )
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="~/js/pages/User/User.js" asp-append-version="true"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.min.js"></script>

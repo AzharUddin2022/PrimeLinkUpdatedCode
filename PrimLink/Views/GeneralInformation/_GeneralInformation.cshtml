@@ -1,0 +1,319 @@
+﻿@using Model.Common.Helper;
+@using Model.Entity;
+@model GeneralInformationModel
+
+<style>
+    .k-button {
+        padding: 15px 40px;
+        background: #000;
+        border: 0;
+        color: #fff;
+        text-transform: uppercase;
+        font-family: helvetica;
+        font-size: 12px;
+        letter-spacing: 3px;
+        position: relative;
+        transition: all .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+        cursor: pointer;
+        display: block;
+    }
+
+        .k-button::after,
+        .k-button::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: all .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+
+        .k-button::after {
+            width: 30px;
+            height: 1px;
+            background: white;
+            transform: translateX(-3px);
+            margin-top: 0px;
+        }
+
+        .k-button::before {
+            content: "";
+            transform: rotate(-135deg) translateX(50%);
+            width: 11px;
+            height: 11px;
+            background: transparent;
+            border-left: 1px solid white;
+            border-bottom: 1px solid white;
+            margin-top: -1px;
+        }
+
+
+        .k-button:hover {
+            padding: 15px 60px 15px 20px;
+        }
+
+            .k-button:hover::after,
+            .k-button:hover::before {
+                opacity: 1;
+                right: 15px;
+            }
+
+
+    .btn-hover {
+        width: 200px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+        cursor: pointer;
+        margin: 20px;
+        height: 55px;
+        text-align: center;
+        border: none;
+        background-size: 300% 100%;
+        border-radius: 50px;
+        moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+    }
+
+        .btn-hover:hover {
+            background-position: 100% 0;
+            moz-transition: all .4s ease-in-out;
+            -o-transition: all .4s ease-in-out;
+            -webkit-transition: all .4s ease-in-out;
+            transition: all .4s ease-in-out;
+        }
+
+        .btn-hover:focus {
+            outline: none;
+        }
+
+        .btn-hover.color-11 {
+            background-image: linear-gradient(to right, #eb3941, #f15e64, #e14e53, #e2373f);
+            box-shadow: 0 5px 15px rgba(242, 97, 103, .4);
+        }
+</style>
+
+<form id="generalInformationForm" data-ajax="true" data-ajax-failure="onFailure" data-ajax-success="onSuccess" kendo-validator="true" method="post" asp-antiforgery="true">
+    @Html.HiddenFor(x => x.Id, new { id = "Id" })
+    @Html.HiddenFor(x => x.UserId, new { id = "userId" })
+    @Html.HiddenFor(x => x.IsAdmin, new { id = "isAdmin" })
+    @Html.HiddenFor(x => x.UserFormId, new { id = "userFormId" })
+    @Html.HiddenFor(x => x.References.Count, new { id = "references" })
+    <div class="col-lg-12">
+        <h1 style="font-weight:bold">General Information</h1>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Client Expected Service Date</label>
+                <div class="form-group">
+                    @(Html.Kendo().DatePickerFor(x => x.ServiceDate)
+                        .Min(DateTime.Now.ToString())
+                        .HtmlAttributes(new { style = "width: 100%", title = "Service Date", id = "ServiceDate" })
+                        .DateInput(false)
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Expected Shipment Date</label>
+                <div class="form-group">
+                    @(Html.Kendo().DatePickerFor(x => x.ShipmentDate)
+                        .Min(DateTime.Now.ToString())
+                        .HtmlAttributes(new { style = "width: 100%", title = "Shipment Date", id = "ShipmentDate" })
+                        .DateInput(false)
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Product Line</label>
+                <div class="form-group">
+                    @(Html.Kendo().DropDownListFor(x => x.ProductLine)
+                        //.Name("Water")
+                        .HtmlAttributes(new { @class = "w-100", id = "ProductLine" })
+                        .OptionLabel("Select Product Line")
+                        .DataTextField("Text")
+                        .DataValueField("Value")
+                        .BindTo(new List<SelectListItem>() {
+                    new SelectListItem() {
+                    Text = "Soft Line",
+                    Value = "Soft Line"
+                    },
+                    new SelectListItem() {
+                    Text = "Hard Line",
+                    Value = "Hard Line"
+                    }
+                    }).Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Product Category</label>
+                <div class="form-group">
+                    @(Html.Kendo().TextBoxFor(m => m.ProductCategory)
+                        .Placeholder("Enter Product Category")
+                        .HtmlAttributes(new { @class = "w-100", id = "ProductCategory" })
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Min % Product To Be Finish</label>
+                <div class="form-group">
+                    @(Html.Kendo().NumericTextBoxFor(x => x.MinPercentProductToFinish)
+                        .Min(0)
+                        .Max(100)
+                        .Format("##.00 \\%")
+                        .HtmlAttributes(new { style = "width: 100%;", @class = "w-60", id = "MinPercentProductToFinish" })
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Min % Product To Be Finish And Packed</label>
+                <div class="form-group">
+                    @(Html.Kendo().NumericTextBoxFor(x => x.MinPercentProductToFinishAndPacked)
+                        .Min(0)
+                        .Max(100)
+                        .Format("##.00 \\%")
+                        .HtmlAttributes(new { style = "width: 100%;", @class = "w-60", id = "MinPercentProductToFinishAndPacked" })
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Destination Country For Your Goods</label>
+                <div class="form-group">
+                    @(Html.Kendo().TextBoxFor(m => m.DestinationCountry)
+                        .Placeholder("Enter Destination Country")
+                        .HtmlAttributes(new { @class = "w-100", id = "DestinationCountry" })
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label>Quantity Unit</label>
+                <div class="form-group">
+                    @(Html.Kendo().TextBoxFor(m => m.QuantityUnit)
+                        .Placeholder("Enter Quantity Unit")
+                        .HtmlAttributes(new { @class = "w-100", id = "QuantityUnit" })
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container">
+            <h2 style="font-weight:bold">References</h2>
+            <br />
+            <div class="row">
+                <div class="col-lg-4">
+                    @if (Model != null && Model.IsApproved == false)
+                    {
+                        <a href="@Url.Action("DownloadTemplate")" class="k-button"><i class="fa fa-download"> Download Template</i></a>
+                    }
+                </div>
+                <div class="col-lg-5" style="float:right">
+                    @(Html.Kendo().Upload()
+                        .Name("files")
+                        .Async(a => a
+                        .Save("Async_Save", "GeneralInformation")
+                        .Remove("Async_Remove", "GeneralInformation")
+                        .AutoUpload(true))
+                        .Events(x => x
+                        .Success("onSuccessUpload")
+                        .Remove("onRemoveUpload"))
+                        .Multiple(false)
+                        .HtmlAttributes(new { aria_label = "File" })
+                        .Validation(validation => validation.AllowedExtensions(new string[] { ".xlsx", "xls" }).MaxFileSize(4294967295).MinFileSize(1))
+                        .Enable(Model != null && Model.IsApproved == true ? false : true)
+                        )
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2">
+                    <label for="PO" class="k-form-label font-weight-bold">PO#</label>
+                </div>
+                <div class="col-lg-2">
+                    <label for="SKU" class="k-form-label font-weight-bold">Item Number</label>
+                </div>
+                <div class="col-lg-2">
+                    <label for="Name" class="k-form-label font-weight-bold">Product Description</label>
+                </div>
+                <div class="col-lg-2">
+                    <label for="Quantity" class="k-form-label font-weight-bold">Quantity</label>
+                </div>
+                <div class="col-lg-2">
+                    <label for="ProductType" class="k-form-label font-weight-bold">Product Type</label>
+                </div>
+                <div class="col-lg-2">
+                    <label class="k-form-label font-weight-bold">Action</label>
+                </div>
+            </div>
+
+            <div class="from-group mb-0" id="referencesLevels" style="overflow-y:scroll; overflow-x:hidden">
+                <partial name="~/Views/GeneralInformation/_Reference.cshtml" model="Model.References" />
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-2">
+                    <label class="k-form-label font-weight-bold">Total:  </label><label id="total" class="k-form-label font-weight-bold">0</label>
+                </div>
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <div class="row" style="text-align: center;">
+                @if (Model.IsApproved == false)
+                {
+                    <button type="button" id="btnAddLevel" class="btn-hover color-11 w-100" onclick="AddLevel(@Model.Id)">Add Level </button>
+                }
+            </div>
+        </div>
+        <br />
+        <partial name="~/Views/GeneralInformation/_Vendor.cshtml" model="Model.Vendor" />
+        <br />
+        <partial name="~/Views/GeneralInformation/_Factory.cshtml" model="Model.Factory" />
+        <br />
+        <div class="row" style="float:right">
+            <div class="col-md-12" id="eventBtns">
+                @if (Model != null && !Model.IsApproved)
+                {
+                    @(Html.Kendo().Button()
+                        .Name("SaveGeneralInformation")
+                        .HtmlAttributes(new { type = "button" })
+                        .Content(Model.Id > 0 ? "Update" : "Save")
+                        .Events(ev => ev.Click("onSaveGeneralInformation"))
+                        )
+                }
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("form").kendoValidator();
+    });
+</script>
+
+<script src="~/js/pages/User/User.js" asp-append-version="true"></script>
