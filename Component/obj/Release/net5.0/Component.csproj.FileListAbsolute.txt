@@ -1,0 +1,12 @@
+C:\Users\areeb\source\repos\PrimLink\Component\bin\Release\net5.0\Component.deps.json
+C:\Users\areeb\source\repos\PrimLink\Component\bin\Release\net5.0\Component.dll
+C:\Users\areeb\source\repos\PrimLink\Component\bin\Release\net5.0\Component.pdb
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.csproj.AssemblyReference.cache
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.AssemblyInfoInputs.cache
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.AssemblyInfo.cs
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.csproj.CoreCompileInputs.cache
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.dll
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\ref\Component.dll
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\Component.pdb
+C:\Users\areeb\source\repos\PrimLink\Component\obj\Release\net5.0\refint\Component.dll
