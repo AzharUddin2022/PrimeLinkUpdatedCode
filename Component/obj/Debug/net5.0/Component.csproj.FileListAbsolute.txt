@@ -32,3 +32,15 @@ C:\Users\sd118\Downloads\PrimLink_20_01_2024\PrimLink_20_01_2024\Component\obj\D
 C:\Users\sd118\Downloads\PrimLink_20_01_2024\PrimLink_20_01_2024\Component\obj\Debug\net5.0\Component.dll
 C:\Users\sd118\Downloads\PrimLink_20_01_2024\PrimLink_20_01_2024\Component\obj\Debug\net5.0\ref\Component.dll
 C:\Users\sd118\Downloads\PrimLink_20_01_2024\PrimLink_20_01_2024\Component\obj\Debug\net5.0\Component.pdb
+D:\Prime\Component\bin\Debug\net5.0\Component.deps.json
+D:\Prime\Component\bin\Debug\net5.0\Component.dll
+D:\Prime\Component\bin\Debug\net5.0\ref\Component.dll
+D:\Prime\Component\bin\Debug\net5.0\Component.pdb
+D:\Prime\Component\obj\Debug\net5.0\Component.csproj.AssemblyReference.cache
+D:\Prime\Component\obj\Debug\net5.0\Component.GeneratedMSBuildEditorConfig.editorconfig
+D:\Prime\Component\obj\Debug\net5.0\Component.AssemblyInfoInputs.cache
+D:\Prime\Component\obj\Debug\net5.0\Component.AssemblyInfo.cs
+D:\Prime\Component\obj\Debug\net5.0\Component.csproj.CoreCompileInputs.cache
+D:\Prime\Component\obj\Debug\net5.0\Component.dll
+D:\Prime\Component\obj\Debug\net5.0\ref\Component.dll
+D:\Prime\Component\obj\Debug\net5.0\Component.pdb
